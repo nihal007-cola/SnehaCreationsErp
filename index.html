@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sneha Creations ERP</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <nav class="sidebar">
+            <h2>Sneha ERP</h2>
+            <button class="tab-link active" onclick="openModule(event, 'orders-bom')">Orders & BOM</button>
+            <button class="tab-link" onclick="openModule(event, 'procurement')">Procurement</button>
+            <button class="tab-link" onclick="openModule(event, 'warehouse')">Warehouse</button>
+            <button class="tab-link" onclick="openModule(event, 'production')">Production</button>
+            <button class="tab-link" onclick="openModule(event, 'settings')">Settings</button>
+            <button class="tab-link" onclick="openModule(event, 'reports')">Reports</button>
+        </nav>
+
+        <main class="content-area">
+            <div id="orders-bom" class="module-content" style="display: block;">
+                <h3>Orders & BOM</h3>
+                <p>FG Order Acceptance, Costing, and BOM forms will render here.</p>
+            </div>
+            
+            <div id="procurement" class="module-content" style="display: none;">
+                <h3>Procurement</h3>
+                <p>Supplier List, PR, and PO forms will render here.</p>
+            </div>
+            
+            <div id="warehouse" class="module-content" style="display: none;">
+                <h3>Warehouse</h3>
+                <p>QC and GRN scanning will render here.</p>
+            </div>
+            
+            <div id="production" class="module-content" style="display: none;">
+                <h3>Production</h3>
+                <p>Order Release and Material Issue will render here.</p>
+            </div>
+            
+            <div id="settings" class="module-content" style="display: none;">
+                <h3>Settings</h3>
+                <p>System TTL and Notifications will render here.</p>
+            </div>
+            
+            <div id="reports" class="module-content" style="display: none;">
+                <h3>Reports</h3>
+                <p>Data exports will render here.</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
