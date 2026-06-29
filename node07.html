@@ -1,0 +1,19 @@
+<!-- Node 07: PO Creation -->
+<div class="form-section">
+  <h4>📄 PO Creation</h4>
+  <div class="form-row">
+    <div><label>Supplier</label><input id="poSupplier" placeholder="Supplier name" /></div>
+    <div><label>Base Rate</label><input id="poBaseRate" type="number" step="0.01" placeholder="0.00" data-calc="po" /></div>
+    <div><label>CGST (%)</label><input id="poCgst" type="number" step="0.01" placeholder="9" data-calc="po" /></div>
+    <div><label>SGST (%)</label><input id="poSgst" type="number" step="0.01" placeholder="9" data-calc="po" /></div>
+  </div>
+  <div class="form-row">
+    <div><label>IGST (%)</label><input id="poIgst" type="number" step="0.01" placeholder="18" data-calc="po" /></div>
+    <div><label>Total Value</label><input id="poTotal" type="number" step="0.01" placeholder="0.00" readonly /></div>
+    <div><label>Notes</label><textarea id="poNotes" placeholder="PO notes..."></textarea></div>
+  </div>
+  <div class="form-actions">
+    <button class="btn btn-primary btn-submit">📄 Create PO</button>
+    <button class="btn btn-outline btn-sm btn-download">📥 Download Format</button>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+<!-- Node 02: BOM Creation -->
+<div class="form-section">
+  <h4>📋 BOM Creation</h4>
+  <div class="form-row">
+    <div><label>FG Token Ref</label><input id="bomFgToken" placeholder="SC-FY26-FG102-001" /></div>
+    <div><label>RM Item</label><input id="bomRmItem" placeholder="Raw material code" /></div>
+    <div><label>UOM</label><select id="bomUom"><option>KG</option><option>PCS</option><option>MTR</option><option>LTR</option></select></div>
+    <div><label>Consumption %</label><input id="bomConsumption" type="number" step="0.01" placeholder="100" /></div>
+  </div>
+  <div class="form-row">
+    <div><label>Wastage %</label><input id="bomWastage" type="number" step="0.01" placeholder="5" /></div>
+    <div><label>Qty Required</label><input id="bomQty" type="number" step="0.01" placeholder="0" /></div>
+    <div><label>Notes</label><textarea id="bomNotes" placeholder="BOM notes..."></textarea></div>
+  </div>
+  <div class="form-actions">
+    <button class="btn btn-success btn-submit">💾 Save BOM</button>
+    <button class="btn btn-outline btn-sm btn-download">📥 Download Format</button>
+    <div class="bulk-upload-area">
+      <span>📤 Bulk Upload CSV</span>
+      <input type="file" class="bulk-upload-input" accept=".csv" />
+    </div>
+  </div>
+</div>

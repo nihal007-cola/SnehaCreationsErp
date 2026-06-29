@@ -1,0 +1,18 @@
+<!-- Node 18: Notification Settings -->
+<div class="form-section">
+  <h4>🔔 Notification Settings</h4>
+  <div class="form-row">
+    <div><label>Telegram Chat ID</label><input id="notifTelegram" placeholder="e.g. -123456789" /></div>
+    <div><label>Whatsapp ID</label><input id="notifWhatsapp" placeholder="+91 98765 43210" /></div>
+    <div><label>Trigger Events</label><textarea id="notifTriggers" placeholder="e.g. PO_APPROVED, QC_FAILED, GRN_COMPLETE"></textarea></div>
+  </div>
+  <div class="checkbox-group">
+    <label><input type="checkbox" checked /> PO Approval</label>
+    <label><input type="checkbox" /> QC Fail</label>
+    <label><input type="checkbox" checked /> GRN Complete</label>
+    <label><input type="checkbox" /> TTL Expiry</label>
+  </div>
+  <div class="form-actions">
+    <button class="btn btn-purple btn-submit">💾 Save Notification Settings</button>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<!-- Node 05: Supplier List -->
+<div class="form-section">
+  <h4>🏢 Supplier List</h4>
+  <div class="form-row">
+    <div><label>Supplier Name</label><input id="supplierName" placeholder="Supplier name" /></div>
+    <div><label>GSTIN (15-char)</label><input id="supplierGstin" placeholder="15-digit GSTIN" maxlength="15" /></div>
+    <div><label>PAN</label><input id="supplierPan" placeholder="PAN number" /></div>
+    <div><label>MSME Udyam</label><input id="supplierUdyam" placeholder="Udyam registration" /></div>
+  </div>
+  <div class="form-row">
+    <div><label>Address</label><textarea id="supplierAddress" placeholder="Full address..."></textarea></div>
+    <div><label>Notes</label><textarea id="supplierNotes" placeholder="Supplier notes..."></textarea></div>
+  </div>
+  <div class="form-actions">
+    <button class="btn btn-success btn-submit">💾 Save Supplier</button>
+    <button class="btn btn-outline btn-sm btn-download">📥 Download Format</button>
+    <div class="bulk-upload-area">
+      <span>📤 Bulk Upload CSV</span>
+      <input type="file" class="bulk-upload-input" accept=".csv" />
+    </div>
+  </div>
+</div>

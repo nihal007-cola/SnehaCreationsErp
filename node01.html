@@ -1,0 +1,27 @@
+<!-- Node 01: FG Order Acceptance -->
+<div class="form-section">
+  <h4>📋 FG Order Acceptance</h4>
+  <div class="form-row">
+    <div><label>Order No (ART)</label><input id="fgOrderNo" value="SC-FY26-FG102-001" readonly /></div>
+    <div><label>Buyer Name</label><input id="fgBuyer" placeholder="Buyer name" /></div>
+    <div><label>Buyer GSTIN</label><input id="fgGstin" placeholder="15-digit GSTIN" maxlength="15" /></div>
+    <div><label>Item Name / HSN</label><input id="fgItem" placeholder="Item code / HSN" /></div>
+  </div>
+  <div class="form-row">
+    <div><label>Size Matrix</label><input id="fgSize" placeholder="e.g. S:100, M:150, L:80" /></div>
+    <div><label>Total Qty</label><input id="fgQty" type="number" placeholder="0" /></div>
+    <div><label>Tax Rate (%)</label><input id="fgTax" type="number" step="0.01" placeholder="18" /></div>
+    <div><label>Delivery Date</label><input id="fgDelivery" type="date" /></div>
+  </div>
+  <div class="form-row">
+    <div><label>Notes</label><textarea id="fgNotes" placeholder="Special instructions..."></textarea></div>
+  </div>
+  <div class="form-actions">
+    <button class="btn btn-success btn-submit">💾 Save Order</button>
+    <button class="btn btn-outline btn-sm btn-download">📥 Download Format</button>
+    <div class="bulk-upload-area">
+      <span>📤 Bulk Upload CSV</span>
+      <input type="file" class="bulk-upload-input" accept=".csv" />
+    </div>
+  </div>
+</div>

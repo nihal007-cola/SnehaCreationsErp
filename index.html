@@ -2,12 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Sneha Creations – ERP (Node-Based)</title>
-  <!-- styles.css will be injected here for single-file demo, but split into 3 parts as requested -->
-  <link rel="stylesheet" href="styles.css">
-  <!-- Fonts -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sneha Creations ERP – Trims Module</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -17,210 +15,192 @@
     <div class="logo-section">
       <img src="https://raw.githubusercontent.com/nihal007-cola/nihal007-cola.github.io/main/ChatGPT%20Image%20Jun%2017%2C%202026%2C%2009_29_09%20AM.png" alt="Sneha Creations Logo" class="logo-square" />
       <div class="brand-name">Sneha Creations</div>
-      <div class="brand-tagline">ERP · Node Based</div>
+      <div class="brand-tagline">ERP · Trims Module</div>
       <div class="brand-subtitle">Powered by Offices of Nawnit Nihal</div>
     </div>
     <div id="methodSelector" class="login-screen active">
-      <div class="method-grid">
-        <div class="method-card" onclick="loginAs('ADMIN')"><span class="icon">🔐</span><div class="label">Admin</div><div class="sub">Full access</div></div>
-        <div class="method-card" onclick="loginAs('USER')"><span class="icon">👤</span><div class="label">User</div><div class="sub">Standard access</div></div>
+      <div id="loginMessage" class="login-message-box"></div>
+      <div class="login-form-group">
+        <label>User ID</label>
+        <input id="loginUserId" placeholder="Enter User ID" value="ADMIN" />
       </div>
-      <div style="margin-top:24px;text-align:center;color:#64748b;font-size:.9rem;">Demo login · no password required</div>
+      <div class="login-form-group">
+        <label>Role</label>
+        <select id="loginRole">
+          <option value="MAKER">Maker</option>
+          <option value="CHECKER" selected>Checker</option>
+          <option value="ADMIN">Admin</option>
+        </select>
+      </div>
+      <button class="login-btn login-btn-primary" onclick="handleLogin()">🔐 Login</button>
+      <div style="margin-top:18px;text-align:center;color:#64748b;font-size:0.8rem;">Enterprise Login · No password required</div>
     </div>
   </div>
 </div>
 
 <!-- ===== MAIN APP ===== -->
 <div id="mainApp">
+  <!-- HEADER -->
   <header class="header">
     <div class="brand">
-      <img src="https://raw.githubusercontent.com/nihal007-cola/nihal007-cola.github.io/main/ChatGPT%20Image%20Jun%2017%2C%202026%2C%2009_29_09%20AM.png" alt="Sneha Creations Logo" class="logo" />
-      <div><h2>Sneha Creations</h2><small>ERP · Node Based</small><p>Powered by Offices of Nawnit Nihal</p></div>
+      <img src="https://raw.githubusercontent.com/nihal007-cola/nihal007-cola.github.io/main/ChatGPT%20Image%20Jun%2017%2C%202026%2C%2009_29_09%20AM.png" alt="Sneha Creations" class="logo" />
+      <div>
+        <h2>Sneha Creations</h2>
+        <small>ERP · Trims Module</small>
+        <p>Powered by Offices of Nawnit Nihal</p>
+      </div>
     </div>
-    <div class="user"><span id="userDisplayName">ADMIN</span><button onclick="logoutUser()">Logout</button></div>
+    <div class="user">
+      <span id="userDisplayName">ADMIN</span>
+      <span id="userRoleBadge" class="role-badge">CHECKER</span>
+      <button onclick="logoutUser()">Logout</button>
+    </div>
   </header>
 
-  <nav class="tabs">
-    <button class="tab active" onclick="openTab(event,'fgorder')">📦 FG ORDER</button>
-    <button class="tab" onclick="openTab(event,'rawmaterial')">🧾 RAW MATERIAL</button>
-    <button class="tab" onclick="openTab(event,'warehouse')">🏭 WAREHOUSE</button>
-    <button class="tab" onclick="openTab(event,'production')">⚙️ PRODUCTION</button>
-    <button class="tab" onclick="openTab(event,'settings')">⚙️ SETTINGS</button>
-    <button class="tab" onclick="openTab(event,'reports')">📊 REPORTS</button>
+  <!-- MAIN TABS -->
+  <nav class="tabs" id="tabContainer">
+    <button class="tab active" data-tab="fgorder" onclick="openTab(event,'fgorder')">📦 FG ORDER</button>
+    <button class="tab" data-tab="rawmaterial" onclick="openTab(event,'rawmaterial')">🧾 RAW MATERIAL</button>
+    <button class="tab" data-tab="warehouse" onclick="openTab(event,'warehouse')">🏭 RAW MATERIAL WAREHOUSE</button>
+    <button class="tab" data-tab="production" onclick="openTab(event,'production')">⚙️ PRODUCTION</button>
+    <button class="tab" data-tab="settings" onclick="openTab(event,'settings')">⚙️ SETTINGS</button>
+    <button class="tab" data-tab="reports" onclick="openTab(event,'reports')">📊 REPORTS</button>
   </nav>
 
   <div class="content">
-
-    <!-- ============================================================ -->
-    <!-- FG ORDER – Acceptance, BOM, Costing, Approval                -->
-    <!-- ============================================================ -->
+    <!-- ===== TAB 1: FG ORDER ===== -->
     <div id="fgorder" class="page active">
       <div class="card">
-        <h3>📦 FG ORDER</h3>
-        <div class="node-grid">
-          <div class="node-card"><div class="node-title">FG Order Acceptance <span class="node-badge">active</span></div><div class="node-desc">Accept customer order</div></div>
-          <div class="node-card"><div class="node-title">BOM Creation <span class="node-badge">pending</span></div><div class="node-desc">Build Bill of Materials</div></div>
-          <div class="node-card"><div class="node-title">Costing <span class="node-badge">draft</span></div><div class="node-desc">Calculate costs</div></div>
-          <div class="node-card"><div class="node-title">BOM Approval <span class="node-badge">waiting</span></div><div class="node-desc">Approve BOM</div></div>
+        <div class="card-header">
+          <h3>📦 FG ORDER</h3>
+          <span class="subtitle">Finished Goods Order Management</span>
         </div>
-        <div class="form-section" style="margin-top:18px;">
-          <div class="form-row">
-            <div><label>Order No</label><input id="fgOrderNo" value="FG-2026-001" readonly /></div>
-            <div><label>Buyer</label><input id="fgBuyer" placeholder="Buyer name" /></div>
-            <div><label>Design</label><input id="fgDesign" placeholder="Design code" /></div>
-            <div><label>Color</label><input id="fgColor" placeholder="Color" /></div>
-          </div>
-          <div class="form-row">
-            <div><label>Total Qty</label><input id="fgTotalQty" type="number" placeholder="0" /></div>
-            <div><label>Delivery Date</label><input id="fgDelivery" type="date" /></div>
-            <div><label>Status</label>
-              <select id="fgStatus"><option>Accepted</option><option>BOM Created</option><option>Costed</option><option>Approved</option></select>
-            </div>
-            <div style="display:flex;align-items:flex-end;"><button class="btn btn-success" onclick="showNotice('✅','FG Order updated (demo)','success')">Save</button></div>
-          </div>
+        <div class="sub-tabs">
+          <button class="sub-tab active" data-sub="node01" onclick="loadNode('node01', 'FG Order Acceptance', event)">FG Order Acceptance</button>
+          <button class="sub-tab" data-sub="node02" onclick="loadNode('node02', 'BOM Creation', event)">BOM Creation</button>
+          <button class="sub-tab" data-sub="node03" onclick="loadNode('node03', 'Costing', event)">Costing</button>
+          <button class="sub-tab" data-sub="node04" onclick="loadNode('node04', 'BOM Approval', event)">BOM Approval</button>
+        </div>
+        <div id="node-content-fgorder" class="node-content">
+          <!-- Node content loaded dynamically -->
+          <div class="loading-placeholder">Select a node to load...</div>
         </div>
       </div>
     </div>
 
-    <!-- ============================================================ -->
-    <!-- RAW MATERIAL – Supplier List, PR, PO, Approval, Logistics, Dispatch -->
-    <!-- ============================================================ -->
+    <!-- ===== TAB 2: RAW MATERIAL ===== -->
     <div id="rawmaterial" class="page">
       <div class="card">
-        <h3>🧾 RAW MATERIAL</h3>
-        <div class="node-grid">
-          <div class="node-card"><div class="node-title">Supplier List <span class="node-badge">active</span></div><div class="node-desc">Manage suppliers</div></div>
-          <div class="node-card"><div class="node-title">Purchase Requisition <span class="node-badge">pending</span></div><div class="node-desc">Create PR</div></div>
-          <div class="node-card"><div class="node-title">PO Creation <span class="node-badge">draft</span></div><div class="node-desc">Purchase Order</div></div>
-          <div class="node-card"><div class="node-title">PO Approval <span class="node-badge">waiting</span></div><div class="node-desc">Approve PO</div></div>
-          <div class="node-card"><div class="node-title">Inbound Logistics <span class="node-badge">planning</span></div><div class="node-desc">Plan logistics</div></div>
-          <div class="node-card"><div class="node-title">RM Dispatch <span class="node-badge">✈️</span></div><div class="node-desc">Supplier invoice & AWB</div></div>
+        <div class="card-header">
+          <h3>🧾 RAW MATERIAL</h3>
+          <span class="subtitle">Procurement & Supply Chain</span>
         </div>
-        <div class="form-section" style="margin-top:18px;">
-          <div class="form-row">
-            <div><label>Supplier</label><input id="rmSupplier" placeholder="Supplier name" /></div>
-            <div><label>Item</label><input id="rmItem" placeholder="Raw material" /></div>
-            <div><label>Qty</label><input id="rmQty" type="number" placeholder="0" /></div>
-            <div><label>UOM</label><select id="rmUom"><option>KG</option><option>PCS</option><option>MTR</option></select></div>
-          </div>
-          <button class="btn btn-success" onclick="showNotice('✅','Raw material procurement updated (demo)','success')">Update</button>
+        <div class="sub-tabs">
+          <button class="sub-tab" data-sub="node05" onclick="loadNode('node05', 'Supplier List', event)">Supplier List</button>
+          <button class="sub-tab" data-sub="node06" onclick="loadNode('node06', 'Purchase Requisition', event)">Purchase Requisition</button>
+          <button class="sub-tab" data-sub="node07" onclick="loadNode('node07', 'PO Creation', event)">PO Creation</button>
+          <button class="sub-tab" data-sub="node08" onclick="loadNode('node08', 'PO Approval', event)">PO Approval</button>
+          <button class="sub-tab" data-sub="node09" onclick="loadNode('node09', 'Inbound Logistics', event)">Inbound Logistics</button>
+          <button class="sub-tab" data-sub="node10" onclick="loadNode('node10', 'RM Dispatch', event)">RM Dispatch</button>
+        </div>
+        <div id="node-content-rawmaterial" class="node-content">
+          <div class="loading-placeholder">Select a node to load...</div>
         </div>
       </div>
     </div>
 
-    <!-- ============================================================ -->
-    <!-- WAREHOUSE – QC, Return, GRN (binning & stock)                -->
-    <!-- ============================================================ -->
+    <!-- ===== TAB 3: WAREHOUSE ===== -->
     <div id="warehouse" class="page">
       <div class="card">
-        <h3>🏭 WAREHOUSE</h3>
-        <div class="node-grid">
-          <div class="node-card"><div class="node-title">Quality Inspection <span class="node-badge">QC</span></div><div class="node-desc">Pass / Fail</div></div>
-          <div class="node-card"><div class="node-title">RM Return <span class="node-badge">return</span></div><div class="node-desc">AWB & Return invoice</div></div>
-          <div class="node-card"><div class="node-title">GRN <span class="node-badge">✅</span></div><div class="node-desc">Binning & stock building</div></div>
+        <div class="card-header">
+          <h3>🏭 RAW MATERIAL WAREHOUSE</h3>
+          <span class="subtitle">Quality Control & Inventory</span>
         </div>
-        <div class="form-section" style="margin-top:18px;">
-          <div class="form-row">
-            <div><label>GRN No</label><input id="grnNo" value="GRN-2026-001" readonly /></div>
-            <div><label>Item</label><input id="grnItem" placeholder="Item name" /></div>
-            <div><label>Qty Received</label><input id="grnQty" type="number" placeholder="0" /></div>
-            <div><label>Bin Location</label><input id="grnBin" placeholder="e.g. B-12" /></div>
-          </div>
-          <button class="btn btn-success" onclick="showNotice('✅','GRN processed (demo)','success')">Process GRN</button>
+        <div class="sub-tabs">
+          <button class="sub-tab" data-sub="node11" onclick="loadNode('node11', 'Quality Inspection', event)">Quality Inspection</button>
+          <button class="sub-tab" data-sub="node12" onclick="loadNode('node12', 'RM Return', event)">RM Return</button>
+          <button class="sub-tab" data-sub="node13" onclick="loadNode('node13', 'GRN', event)">GRN (Binning & Stock)</button>
+        </div>
+        <div id="node-content-warehouse" class="node-content">
+          <div class="loading-placeholder">Select a node to load...</div>
         </div>
       </div>
     </div>
 
-    <!-- ============================================================ -->
-    <!-- PRODUCTION – Order Release, Material Issue                   -->
-    <!-- ============================================================ -->
+    <!-- ===== TAB 4: PRODUCTION ===== -->
     <div id="production" class="page">
       <div class="card">
-        <h3>⚙️ PRODUCTION</h3>
-        <div class="node-grid">
-          <div class="node-card"><div class="node-title">Production Order Release <span class="node-badge">release</span></div><div class="node-desc">Release to shop floor</div></div>
-          <div class="node-card"><div class="node-title">Material Issue <span class="node-badge">stock</span></div><div class="node-desc">Stock reduction</div></div>
+        <div class="card-header">
+          <h3>⚙️ PRODUCTION</h3>
+          <span class="subtitle">Shop Floor Execution</span>
         </div>
-        <div class="form-section" style="margin-top:18px;">
-          <div class="form-row">
-            <div><label>Production Order</label><input id="prodOrder" value="PO-2026-001" readonly /></div>
-            <div><label>FG Item</label><input id="prodFg" placeholder="FG code" /></div>
-            <div><label>Qty to Produce</label><input id="prodQty" type="number" placeholder="0" /></div>
-            <div><label>Issue Date</label><input id="prodIssueDate" type="date" /></div>
-          </div>
-          <button class="btn btn-warning" onclick="showNotice('⚙️','Production release & material issue (demo)','warning')">Release & Issue</button>
+        <div class="sub-tabs">
+          <button class="sub-tab" data-sub="node14" onclick="loadNode('node14', 'Production Order Release', event)">Production Order Release</button>
+          <button class="sub-tab" data-sub="node15" onclick="loadNode('node15', 'Material Issue', event)">Material Issue (Stock Reduction)</button>
+        </div>
+        <div id="node-content-production" class="node-content">
+          <div class="loading-placeholder">Select a node to load...</div>
         </div>
       </div>
     </div>
 
-    <!-- ============================================================ -->
-    <!-- SETTINGS – TTL per node, Notification settings               -->
-    <!-- ============================================================ -->
+    <!-- ===== TAB 5: SETTINGS ===== -->
     <div id="settings" class="page">
       <div class="card">
-        <h3>⚙️ SETTINGS</h3>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;">
-          <div class="form-section">
-            <h4 style="border:none;color:#38bdf8;">⏱️ Time to Live per Node</h4>
-            <div class="form-row"><div><label>FG Order Acceptance (days)</label><input type="number" value="2" /></div></div>
-            <div class="form-row"><div><label>BOM Creation (days)</label><input type="number" value="3" /></div></div>
-            <div class="form-row"><div><label>Costing (days)</label><input type="number" value="1" /></div></div>
-            <div class="form-row"><div><label>BOM Approval (days)</label><input type="number" value="2" /></div></div>
-            <div class="form-row"><div><label>PO Approval (days)</label><input type="number" value="2" /></div></div>
-            <div class="form-row"><div><label>Logistics (days)</label><input type="number" value="5" /></div></div>
-            <div class="form-row"><div><label>Quality Inspection (days)</label><input type="number" value="1" /></div></div>
-            <div class="form-row"><div><label>GRN (days)</label><input type="number" value="1" /></div></div>
-          </div>
-          <div class="form-section">
-            <h4 style="border:none;color:#38bdf8;">🔔 Notification & Concerned Settings</h4>
-            <div class="form-row"><div><label>Alert Email</label><input type="email" placeholder="ops@company.com" /></div></div>
-            <div class="form-row"><div><label>Telegram Chat ID</label><input placeholder="e.g. -123456789" /></div></div>
-            <div class="form-row"><div><label>Notification Threshold (days)</label><input type="number" value="1" /></div></div>
-            <div style="margin-top:12px;display:flex;gap:12px;flex-wrap:wrap;">
-              <label><input type="checkbox" checked /> Notify on PO Approval</label>
-              <label><input type="checkbox" /> Notify on QC Fail</label>
-              <label><input type="checkbox" checked /> Notify on GRN</label>
-            </div>
-            <button class="btn btn-purple" onclick="showNotice('✅','Settings saved (demo)','success')" style="margin-top:16px;">Save Settings</button>
-          </div>
+        <div class="card-header">
+          <h3>⚙️ SETTINGS</h3>
+          <span class="subtitle">System Configuration</span>
+        </div>
+        <div class="sub-tabs">
+          <button class="sub-tab" data-sub="node16" onclick="loadNode('node16', 'TTL Settings', event)">Time to Live per Node</button>
+          <button class="sub-tab" data-sub="node17" onclick="loadNode('node17', 'Form Headers', event)">Form Headers</button>
+          <button class="sub-tab" data-sub="node18" onclick="loadNode('node18', 'Notification Settings', event)">Notification Settings</button>
+        </div>
+        <div id="node-content-settings" class="node-content">
+          <div class="loading-placeholder">Select a node to load...</div>
         </div>
       </div>
     </div>
 
-    <!-- ============================================================ -->
-    <!-- REPORTS                                                      -->
-    <!-- ============================================================ -->
+    <!-- ===== TAB 6: REPORTS ===== -->
     <div id="reports" class="page">
       <div class="card">
-        <h3>📊 REPORTS</h3>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
-          <button class="btn btn-success" onclick="showNotice('📊','Stock report (demo)','info')">Stock Position</button>
-          <button class="btn btn-purple" onclick="showNotice('📊','Requirement report (demo)','info')">RM Requirement</button>
-          <button class="btn btn-secondary" onclick="showNotice('🖨️','Print (demo)','info')">Print</button>
+        <div class="card-header">
+          <h3>📊 REPORTS</h3>
+          <span class="subtitle">Analytics & Insights</span>
         </div>
-        <div style="padding:20px;background:#0f172a;border-radius:12px;border:1px solid #2a3a5a;color:#94a3b8;text-align:center;">Report data will appear here (demo).</div>
+        <div class="sub-tabs">
+          <button class="sub-tab" data-sub="report-stock" onclick="loadReport('stock')">Stock Position</button>
+          <button class="sub-tab" data-sub="report-requirement" onclick="loadReport('requirement')">RM Requirement</button>
+          <button class="sub-tab" data-sub="report-print" onclick="loadReport('print')">Print</button>
+        </div>
+        <div id="node-content-reports" class="node-content">
+          <div class="loading-placeholder">Select a report to load...</div>
+        </div>
       </div>
     </div>
-
-  </div><!-- /content -->
+  </div>
 
   <!-- ===== NOTICE MODAL ===== -->
   <div id="noticeModal">
     <div class="notice-box">
       <span class="notice-icon" id="noticeIcon">📢</span>
       <h2 id="noticeTitle">Notice</h2>
-      <p id="noticeMessage">Message</p>
-      <div class="notice-actions"><button class="btn btn-success" onclick="closeNotice()">OK</button></div>
+      <div class="notice-message-scroll"><p id="noticeMessage">Message</p></div>
+      <div class="notice-actions">
+        <button class="btn btn-success" onclick="closeNotice()">OK</button>
+        <button class="btn btn-outline" onclick="window.print()">🖨️ Print</button>
+      </div>
     </div>
   </div>
 
   <!-- ===== LOADER ===== -->
-  <div id="fullscreenLoader"><div class="loader-spinner"></div><div class="loader-text">Loading...</div></div>
+  <div id="fullscreenLoader">
+    <div class="loader-spinner"></div>
+    <div class="loader-text" id="loaderText">Processing...</div>
+  </div>
 </div>
 
-<!-- ============================================================ -->
-<!-- app.js will be linked here                                    -->
-<!-- ============================================================ -->
 <script src="app.js"></script>
 </body>
 </html>

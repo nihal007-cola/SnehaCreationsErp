@@ -1,0 +1,19 @@
+<!-- Node 03: Costing -->
+<div class="form-section">
+  <h4>💰 Costing</h4>
+  <div class="form-row">
+    <div><label>BOM Token Ref</label><input id="costBomToken" placeholder="SC-FY26-FG102-001-BOM" /></div>
+    <div><label>RM Cost</label><input id="costRmCost" type="number" step="0.01" placeholder="0.00" data-calc="costing" /></div>
+    <div><label>Labor Cost</label><input id="costLabor" type="number" step="0.01" placeholder="0.00" data-calc="costing" /></div>
+    <div><label>Overheads</label><input id="costOverhead" type="number" step="0.01" placeholder="0.00" data-calc="costing" /></div>
+  </div>
+  <div class="form-row">
+    <div><label>Variable Tax (%)</label><input id="costTax" type="number" step="0.01" placeholder="18" data-calc="costing" /></div>
+    <div><label>Total Est. Cost</label><input id="costTotal" type="number" step="0.01" placeholder="0.00" readonly /></div>
+    <div><label>Notes</label><textarea id="costNotes" placeholder="Costing notes..."></textarea></div>
+  </div>
+  <div class="form-actions">
+    <button class="btn btn-warning btn-submit">💰 Calculate & Save</button>
+    <button class="btn btn-outline btn-sm btn-download">📥 Download Format</button>
+  </div>
+</div>
