@@ -27,6 +27,48 @@ let isSaving = false;
 let bomMaterials = [];
 let ppmOrders = [];
 
+// ─── CORE NAVIGATION (Hierarchy Engine) ────────────────────────
+function switchMainTab(tabId) {
+    if (!checkSession()) return;
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('#mainTabs .tab').forEach(t => t.classList.remove('active'));
+    const target = document.getElementById(tabId);
+    if (target) target.classList.add('active');
+    const btn = document.querySelector('#mainTabs .tab[onclick*="' + tabId + '"]');
+    if (btn) btn.classList.add('active');
+
+    const subContainer = document.getElementById('subTabs-' + tabId);
+    if (subContainer) {
+        const firstSub = subContainer.querySelector('.sub-tab');
+        if (firstSub) {
+            const subId = firstSub.getAttribute('onclick').match(/'([^']+)'/)[1];
+            switchSubTab(tabId, subId);
+        }
+    } else {
+        const allSubPages = target.querySelectorAll('.sub-page');
+        allSubPages.forEach(sp => sp.classList.remove('active'));
+    }
+    hideForms(); closeNotice(); closeBOMWorkspace(); closeBuyerModal(); closePickerModal();
+    if (tabId === 'tab1') { loadOrders(); refreshFGItems(); }
+}
+
+function switchSubTab(mainTabId, subId) {
+    if (!checkSession()) return;
+    const mainPage = document.getElementById(mainTabId);
+    if (!mainPage) return;
+    mainPage.querySelectorAll('.sub-page').forEach(sp => sp.classList.remove('active'));
+    const target = document.getElementById(subId);
+    if (target) target.classList.add('active');
+    const subContainer = document.getElementById('subTabs-' + mainTabId);
+    if (subContainer) {
+        subContainer.querySelectorAll('.sub-tab').forEach(st => st.classList.remove('active'));
+        const btn = subContainer.querySelector('.sub-tab[onclick*="' + subId + '"]');
+        if (btn) btn.classList.add('active');
+    }
+    if (subId === 'n1') { loadOrders(); }
+    if (subId === 'n2') { refreshFGItems(); }
+}
+
 // ─── SESSION ──────────────────────────────────────────────────
 function getSessionToken() { return sessionToken || sessionStorage.getItem('sneha_session_token'); }
 function setSession(token, user) { sessionToken = token; currentUser = user; sessionStorage.setItem('sneha_session_token', token); sessionStorage.setItem('sneha_user', JSON.stringify(user)); }
@@ -405,7 +447,7 @@ function initMainApp() {
     loadInternalIssues();
     loadBuyerDropdown();
     loadPickingItems();
-    switchSubTab('tab1', 'n1');
+    switchMainTab('tab1');
 }
 
 // ─── DOM READY ───────────────────────────────────────────────

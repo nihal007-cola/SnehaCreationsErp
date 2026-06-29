@@ -11,237 +11,43 @@
 </head>
 <body>
 
-    <!-- ============================================================ -->
-    <!-- LOGIN PAGE                                                   -->
-    <!-- ============================================================ -->
     <div id="loginPage" class="active">
         <div class="login-container">
             <div class="logo-section">
-                <img src="https://raw.githubusercontent.com/nihal007-cola/nihal007-cola.github.io/main/ChatGPT%20Image%20Jun%2017%2C%202026%2C%2009_29_09%20AM.png"
-                alt="Sneha Creations Logo"
-                class="logo-square pulse" />
+                <img src="https://raw.githubusercontent.com/nihal007-cola/nihal007-cola.github.io/main/ChatGPT%20Image%20Jun%2017%2C%202026%2C%2009_29_09%20AM.png" alt="Sneha Creations Logo" class="logo-square pulse" />
                 <div class="brand-name">Sneha Creations</div>
                 <div class="brand-tagline">Raw Material Management</div>
                 <div class="brand-subtitle">Powered by Offices of Nawnit Nihal</div>
             </div>
-
             <div id="methodSelector" class="login-screen active">
-                <div style="text-align:center;margin-bottom:24px;">
-                    <p style="color:#94a3b8;font-size:0.95rem;">Choose your login method</p>
-                </div>
+                <div style="text-align:center;margin-bottom:24px;"><p style="color:#94a3b8;font-size:0.95rem;">Choose your login method</p></div>
                 <div class="method-grid">
-                    <div class="method-card" onclick="selectMethod('telegram')">
-                        <span class="icon">📱</span>
-                        <div class="label">Telegram</div>
-                        <div class="sub">OTP via Telegram</div>
-                    </div>
-                    <div class="method-card" onclick="selectMethod('email')">
-                        <span class="icon">✉️</span>
-                        <div class="label">Email</div>
-                        <div class="sub">Email &amp; Password</div>
-                    </div>
+                    <div class="method-card" onclick="selectMethod('telegram')"><span class="icon">📱</span><div class="label">Telegram</div><div class="sub">OTP via Telegram</div></div>
+                    <div class="method-card" onclick="selectMethod('email')"><span class="icon">✉️</span><div class="label">Email</div><div class="sub">Email &amp; Password</div></div>
                 </div>
                 <div class="divider">OR</div>
                 <button class="login-btn login-btn-outline" onclick="showSignupMethodSelector()">✨ Create New Account</button>
             </div>
-
-            <div id="signupMethodSelector" class="login-screen">
-                <button class="login-btn login-btn-text" onclick="goBackToMethodSelector()" style="margin-bottom:16px;">← Back to Login</button>
-                <div style="text-align:center;margin-bottom:24px;">
-                    <p style="color:#94a3b8;font-size:0.95rem;">Choose how to register</p>
-                </div>
-                <div class="method-grid">
-                    <div class="method-card" onclick="showTelegramSignup()">
-                        <span class="icon">📱</span>
-                        <div class="label">Telegram</div>
-                        <div class="sub">Register with Telegram</div>
-                    </div>
-                    <div class="method-card" onclick="showEmailSignup()">
-                        <span class="icon">✉️</span>
-                        <div class="label">Email</div>
-                        <div class="sub">Register with Email</div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="telegramPhoneScreen" class="login-screen">
-                <button class="login-btn login-btn-text" onclick="goBackToMethodSelector()" style="margin-bottom:16px;">← Back</button>
-                <div id="telegramMessageBox" class="login-message-box"></div>
-                <div class="login-form-group">
-                    <label>📱 Phone Number</label>
-                    <div class="input-wrapper">
-                        <span class="input-icon">📞</span>
-                        <input type="number" id="telegramPhone" placeholder="Enter 10-digit phone number" maxlength="10"
-                        oninput="handleTelegramPhoneInput(this)" />
-                    </div>
-                </div>
-                <button class="login-btn login-btn-telegram" id="telegramOtpBtn" disabled onclick="requestTelegramOTP()">🔐 Get OTP on Telegram</button>
-            </div>
-
-            <div id="telegramOtpScreen" class="login-screen">
-                <button class="login-btn login-btn-text" onclick="goBackToTelegramPhone()" style="margin-bottom:16px;">← Back</button>
-                <div id="telegramOtpMessageBox" class="login-message-box"></div>
-                <div style="text-align:center;margin-bottom:20px;">
-                    <span style="font-size:3rem;display:block;margin-bottom:8px;">🔐</span>
-                    <p style="color:#94a3b8;font-size:0.9rem;">Enter the OTP sent to your Telegram<br/><strong style="color:#38bdf8;" id="telegramOtpPhoneDisplay"></strong></p>
-                </div>
-                <div class="login-form-group">
-                    <label>Enter 6‑Digit OTP</label>
-                    <div class="otp-input-group">
-                        <input type="number" maxlength="1" id="t_otp1" oninput="telegramOtpInputHandler(this, 't_otp2')" />
-                        <input type="number" maxlength="1" id="t_otp2" oninput="telegramOtpInputHandler(this, 't_otp3')" />
-                        <input type="number" maxlength="1" id="t_otp3" oninput="telegramOtpInputHandler(this, 't_otp4')" />
-                        <input type="number" maxlength="1" id="t_otp4" oninput="telegramOtpInputHandler(this, 't_otp5')" />
-                        <input type="number" maxlength="1" id="t_otp5" oninput="telegramOtpInputHandler(this, 't_otp6')" />
-                        <input type="number" maxlength="1" id="t_otp6" oninput="telegramOtpInputHandler(this, null)" />
-                    </div>
-                </div>
-                <button class="login-btn login-btn-success" id="telegramVerifyBtn" disabled onclick="verifyTelegramOTP()">✅ Verify &amp; Login</button>
-                <p class="timer-text">OTP expires in <span id="telegramOtpTimer">05:00</span></p>
-                <button class="login-btn login-btn-text" onclick="resendTelegramOTP()">🔄 Resend OTP</button>
-            </div>
-
-            <div id="telegramSignupScreen" class="login-screen">
-                <button class="login-btn login-btn-text" onclick="goBackToSignupMethodSelector()" style="margin-bottom:16px;">← Back</button>
-                <div id="telegramSignupMessageBox" class="login-message-box"></div>
-                <div style="text-align:center;margin-bottom:20px;">
-                    <span style="font-size:3rem;display:block;margin-bottom:8px;">📱</span>
-                    <p style="color:#94a3b8;font-size:0.9rem;">Create a new account with Telegram.<br/>Admin will approve your registration.</p>
-                </div>
-                <div class="login-form-group">
-                    <label>👤 Full Name</label>
-                    <div class="input-wrapper"><span class="input-icon">👤</span><input type="text" id="t_signupName" placeholder="Enter your full name" /></div>
-                </div>
-                <div class="login-form-group">
-                    <label>📱 Phone Number</label>
-                    <div class="input-wrapper"><span class="input-icon">📞</span><input type="number" id="t_signupPhone" placeholder="Enter 10-digit phone number" maxlength="10" /></div>
-                </div>
-                <div class="login-form-group">
-                    <label>📧 Email (Optional)</label>
-                    <div class="input-wrapper"><span class="input-icon">✉️</span><input type="email" id="t_signupEmail" placeholder="Enter your email address" /></div>
-                </div>
-                <div class="login-form-group">
-                    <label>🔑 Role</label>
-                    <div class="input-wrapper">
-                        <span class="input-icon">🛡️</span>
-                        <select id="t_signupRole">
-                            <option value="USER">USER – Standard Access</option>
-                            <option value="ADMIN">ADMIN – Full Access</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="login-form-group">
-                    <label>💬 Telegram Chat ID</label>
-                    <div class="input-wrapper"><span class="input-icon">💬</span><input type="text" id="t_signupChatId" placeholder="Get from Telegram bot" /></div>
-                    <p style="color:#64748b;font-size:0.7rem;margin-top:6px;">Send /chatid to our Telegram bot to get your Chat ID.</p>
-                </div>
-                <button class="login-btn login-btn-primary" id="t_submitSignupBtn" onclick="submitTelegramSignup()">📝 Submit Registration Request</button>
-            </div>
-
-            <div id="telegramSignupSuccessScreen" class="login-screen">
-                <span class="status-icon">⏳</span>
-                <div class="status-title">Registration Submitted!</div>
-                <div class="status-message">
-                    Your registration request has been submitted.<br/><br/>
-                    <strong style="color:#38bdf8;">Admin will review and approve your account.</strong><br/><br/>
-                    You will receive a notification on Telegram once approved.
-                </div>
-                <button class="login-btn login-btn-primary" onclick="goBackToMethodSelector()">← Back to Login</button>
-            </div>
-
-            <div id="emailLoginScreen" class="login-screen">
-                <button class="login-btn login-btn-text" onclick="goBackToMethodSelector()" style="margin-bottom:16px;">← Back</button>
-                <div id="emailLoginMessageBox" class="login-message-box"></div>
-                <div class="login-form-group">
-                    <label>✉️ Email Address</label>
-                    <div class="input-wrapper">
-                        <span class="input-icon">✉️</span>
-                        <input type="email" id="emailLoginInput" placeholder="Enter your email address" />
-                    </div>
-                </div>
-                <div class="login-form-group">
-                    <label>🔑 Password</label>
-                    <div class="input-wrapper">
-                        <span class="input-icon">🔑</span>
-                        <input type="password" id="passwordLoginInput" placeholder="Enter your password" />
-                    </div>
-                </div>
-                <button class="login-btn login-btn-email" onclick="loginWithEmail()">✅ Login</button>
-                <button class="login-btn login-btn-text" onclick="showEmailSignup()">🆕 Don't have an account? Register</button>
-            </div>
-
-            <div id="emailSignupScreen" class="login-screen">
-                <button class="login-btn login-btn-text" onclick="goBackToEmailLogin()" style="margin-bottom:16px;">← Back to Login</button>
-                <div id="emailSignupMessageBox" class="login-message-box"></div>
-                <div style="text-align:center;margin-bottom:20px;">
-                    <span style="font-size:3rem;display:block;margin-bottom:8px;">✉️</span>
-                    <p style="color:#94a3b8;font-size:0.9rem;">Create a new account with Email.<br/>Admin will approve your registration.</p>
-                </div>
-                <div class="login-form-group">
-                    <label>👤 Full Name</label>
-                    <div class="input-wrapper"><span class="input-icon">👤</span><input type="text" id="e_signupName" placeholder="Enter your full name" /></div>
-                </div>
-                <div class="login-form-group">
-                    <label>✉️ Email Address</label>
-                    <div class="input-wrapper"><span class="input-icon">✉️</span><input type="email" id="e_signupEmail" placeholder="Enter your email address" /></div>
-                </div>
-                <div class="login-form-group">
-                    <label>📱 Phone Number (Optional)</label>
-                    <div class="input-wrapper"><span class="input-icon">📞</span><input type="number" id="e_signupPhone" placeholder="Enter 10-digit phone number" maxlength="10" /></div>
-                </div>
-                <div class="login-form-group">
-                    <label>🔑 Password (min 6 characters)</label>
-                    <div class="input-wrapper"><span class="input-icon">🔑</span><input type="password" id="e_signupPassword" placeholder="Create a password" /></div>
-                </div>
-                <div class="login-form-group">
-                    <label>🔑 Role</label>
-                    <div class="input-wrapper">
-                        <span class="input-icon">🛡️</span>
-                        <select id="e_signupRole">
-                            <option value="USER">USER – Standard Access</option>
-                            <option value="ADMIN">ADMIN – Full Access</option>
-                        </select>
-                    </div>
-                </div>
-                <button class="login-btn login-btn-primary" onclick="submitEmailSignup()">📝 Register</button>
-            </div>
-
-            <div id="emailSignupSuccessScreen" class="login-screen">
-                <span class="status-icon">⏳</span>
-                <div class="status-title">Registration Submitted!</div>
-                <div class="status-message">
-                    Your registration request has been submitted.<br/><br/>
-                    <strong style="color:#38bdf8;">Admin will review and approve your account.</strong><br/><br/>
-                    You will receive an email notification once approved.
-                </div>
-                <button class="login-btn login-btn-primary" onclick="goBackToMethodSelector()">← Back to Login</button>
-            </div>
-
+            <div id="signupMethodSelector" class="login-screen"></div>
+            <div id="telegramPhoneScreen" class="login-screen"></div>
+            <div id="telegramOtpScreen" class="login-screen"></div>
+            <div id="telegramSignupScreen" class="login-screen"></div>
+            <div id="telegramSignupSuccessScreen" class="login-screen"></div>
+            <div id="emailLoginScreen" class="login-screen"></div>
+            <div id="emailSignupScreen" class="login-screen"></div>
+            <div id="emailSignupSuccessScreen" class="login-screen"></div>
         </div>
     </div>
 
-    <!-- ============================================================ -->
-    <!-- MAIN APP                                                     -->
-    <!-- ============================================================ -->
     <div id="mainApp">
         <header class="header">
             <div class="brand">
-                <img src="https://raw.githubusercontent.com/nihal007-cola/nihal007-cola.github.io/main/ChatGPT%20Image%20Jun%2017%2C%202026%2C%2009_29_09%20AM.png"
-                alt="Sneha Creations Logo"
-                class="logo" />
-                <div>
-                    <h2>Sneha Creations</h2>
-                    <small>Raw Material Management</small>
-                    <p>Powered by Offices of Nawnit Nihal</p>
-                </div>
+                <img src="https://raw.githubusercontent.com/nihal007-cola/nihal007-cola.github.io/main/ChatGPT%20Image%20Jun%2017%2C%202026%2C%2009_29_09%20AM.png" alt="Sneha Creations Logo" class="logo" />
+                <div><h2>Sneha Creations</h2><small>Raw Material Management</small><p>Powered by Offices of Nawnit Nihal</p></div>
             </div>
-            <div class="user">
-                <span id="userDisplayName">ADMIN</span>
-                <button onclick="logoutUser()">Logout</button>
-            </div>
+            <div class="user"><span id="userDisplayName">ADMIN</span><button onclick="logoutUser()">Logout</button></div>
         </header>
 
-        <!-- ===== MAIN TABS (ERP Nodes) ===== -->
         <nav class="tabs" id="mainTabs">
             <button class="tab active" onclick="switchMainTab('tab1')">📋 Orders &amp; BOM</button>
             <button class="tab" onclick="switchMainTab('tab2')">📦 Procurement</button>
@@ -252,247 +58,71 @@
         </nav>
 
         <div class="content">
-
-            <!-- ========================================================== -->
-            <!-- TAB 1: Orders & BOM                                         -->
-            <!-- ========================================================== -->
             <div id="tab1" class="page active">
-                <!-- Sub-tabs -->
                 <div class="sub-tabs" id="subTabs-tab1">
                     <button class="sub-tab active" onclick="switchSubTab('tab1','n1')">N1: FG Order</button>
                     <button class="sub-tab" onclick="switchSubTab('tab1','n2')">N2: BOM Creation</button>
                     <button class="sub-tab" onclick="switchSubTab('tab1','n3')">N3: Costing</button>
                     <button class="sub-tab" onclick="switchSubTab('tab1','n4')">N4: BOM Approval</button>
                 </div>
-
-                <!-- N1: FG Order -->
-                <div id="n1" class="sub-page active">
-                    <div class="card">
-                        <h3>FG Order</h3>
-                        <div style="display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;">
-                            <button class="btn btn-success" onclick="exportOrderTemplate()" style="background:#16a34a;">📥 Download Template</button>
-                            <button class="btn btn-success" onclick="document.getElementById('orderExcelUpload').click()" style="background:#16a34a;">📤 Upload Excel</button>
-                            <input type="file" id="orderExcelUpload" accept=".xlsx,.xls,.csv" style="display:none;" onchange="importOrderData(event)" />
-                            <span id="orderUploadStatus" style="color:#94a3b8;font-size:0.85rem;display:flex;align-items:center;"></span>
-                            <button class="btn btn-success" onclick="loadOrders()" style="background:#7c3aed;">🔄 Refresh</button>
-                        </div>
-                        <div id="orderImportSummary" class="import-summary" style="display:none;"></div>
-                        <div class="form-section">
-                            <div class="form-row">
-                                <div><label>INTERNAL SEQUENCE NO. (Auto)</label><input id="order_seqNo" readonly /></div>
-                                <div><label>ORDER DATE *</label><input id="order_date" type="date" required /></div>
-                                <div><label>BUYER *</label>
-                                    <div style="display:flex;gap:10px;align-items:center;">
-                                        <select id="order_buyer" style="flex:1;" required><option value="">Select Buyer</option></select>
-                                        <button class="btn" onclick="openBuyerModal()" style="margin-top:0;padding:10px 16px;background:#16a34a;white-space:nowrap;font-size:0.85rem;">➕ Add Buyer</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div><label>BUYER ORDER NO. *</label><input id="order_buyerOrderNo" placeholder="Enter buyer order number" required /></div>
-                                <div><label>BUYER ORDER DATE *</label><input id="order_buyerOrderDate" type="date" required /></div>
-                                <div><label>Number of Unique FG Items *</label>
-                                    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-                                        <input id="order_fgCount" type="number" placeholder="e.g. 3" min="1" max="20" required style="flex:1;min-width:80px;" />
-                                        <button class="btn" onclick="generateFGItems()" style="margin-top:0;padding:10px 20px;background:#7c3aed;white-space:nowrap;">🔄 Generate Size Grid</button>
-                                    </div>
-                                </div>
-                                <div><label>DELIVERY DATE *</label><input id="order_deliveryDate" type="date" required onchange="calculateLeadTime()" /></div>
-                            </div>
-                            <div class="form-row">
-                                <div><label>LEAD TIME (Days) (Auto)</label><input id="order_leadTime" readonly value="0" /></div>
-                                <div><label>PLANNED ISSUANCE DATE (Auto)</label><input id="order_plannedIssuance" readonly value="-" /></div>
-                                <div><label>&nbsp;</label></div>
-                                <div><label>&nbsp;</label></div>
-                            </div>
-                            <div id="fgItemsContainer" style="width:100%;margin-top:16px;overflow-x:auto;">
-                                <p style="color:#94a3b8;padding:20px;text-align:center;">Enter number of FG items and click Generate Size Grid.</p>
-                            </div>
-                            <div class="form-row" style="margin-top:16px;">
-                                <div><label>TOTAL (Auto-calculated)</label><input id="order_total" readonly value="0" style="font-weight:700;color:#38bdf8;font-size:1.2rem;" /></div>
-                                <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;">
-                                    <button class="btn btn-success" onclick="saveOrder()" style="flex:1;">💾 Save Order</button>
-                                    <button class="btn btn-secondary" onclick="resetOrderForm()" style="flex:1;">🔄 Reset</button>
-                                </div>
-                            </div>
-                        </div>
-                        <h4 style="margin-top:30px;">Recent Orders</h4>
-                        <div id="orderList" style="margin-top:12px;overflow-x:auto;width:100%;">
-                            <div id="ordersLoading" style="text-align:center;padding:20px;color:#94a3b8;">Loading orders...</div>
-                            <div id="ordersTableWrapper" style="display:none;">
-                                <table style="width:100%;border-collapse:collapse;min-width:1000px;">
-                                    <thead>
-                                        <tr style="background:#0f172a;">
-                                            <th style="padding:12px;border:1px solid #334155;text-align:left;white-space:nowrap;">Int. Seq</th>
-                                            <th style="padding:12px;border:1px solid #334155;text-align:left;white-space:nowrap;">Order Date</th>
-                                            <th style="padding:12px;border:1px solid #334155;text-align:left;white-space:nowrap;">Buyer</th>
-                                            <th style="padding:12px;border:1px solid #334155;text-align:left;white-space:nowrap;">Buyer Order No</th>
-                                            <th style="padding:12px;border:1px solid #334155;text-align:left;white-space:nowrap;">FG Key</th>
-                                            <th style="padding:12px;border:1px solid #334155;text-align:left;white-space:nowrap;">Total</th>
-                                            <th style="padding:12px;border:1px solid #334155;text-align:left;white-space:nowrap;">Delivery Date</th>
-                                            <th style="padding:12px;border:1px solid #334155;text-align:left;white-space:nowrap;">Lead Time</th>
-                                            <th style="padding:12px;border:1px solid #334155;text-align:center;white-space:nowrap;">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="orderTableBody"></tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- N2: BOM Creation -->
-                <div id="n2" class="sub-page">
-                    <div class="card">
-                        <h3>BOM Creation</h3>
-                        <div class="form-section" style="margin-bottom:20px;">
-                            <div class="form-row">
-                                <div style="grid-column:1/-1;"><label>🔍 Search FG Items</label>
-                                    <div style="display:flex;gap:12px;flex-wrap:wrap;">
-                                        <input id="bomSearchInput" placeholder="Search by Buyer Order No, Design No, or Color No..." style="flex:1;min-width:200px;" oninput="filterFGItems(this.value)" />
-                                        <button class="btn" onclick="document.getElementById('bomSearchInput').value='';filterFGItems('');" style="margin-top:0;padding:10px 20px;background:#475569;">🔄 Reset</button>
-                                        <button class="btn" onclick="refreshFGItems()" style="margin-top:0;padding:10px 20px;background:#7c3aed;">🔄 Refresh List</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="margin-top:8px;color:#94a3b8;font-size:0.85rem;"><span id="bomResultCount">Loading FG items...</span></div>
-                        </div>
-                        <div id="bomTableContainer" style="overflow-x:auto;width:100%;margin-top:12px;">
-                            <table style="width:100%;border-collapse:collapse;min-width:700px;">
-                                <thead><tr style="background:#0f172a;">
-                                    <th style="padding:12px;border:1px solid #334155;text-align:left;white-space:nowrap;">Buyer Order No</th>
-                                    <th style="padding:12px;border:1px solid #334155;text-align:left;white-space:nowrap;">Design</th>
-                                    <th style="padding:12px;border:1px solid #334155;text-align:left;white-space:nowrap;">Color</th>
-                                    <th style="padding:12px;border:1px solid #334155;text-align:left;white-space:nowrap;">FG Key</th>
-                                    <th style="padding:12px;border:1px solid #334155;text-align:left;white-space:nowrap;">PPM No</th>
-                                    <th style="padding:12px;border:1px solid #334155;text-align:left;white-space:nowrap;">BOM Locked</th>
-                                    <th style="padding:12px;border:1px solid #334155;text-align:center;white-space:nowrap;">Action</th>
-                                </tr></thead>
-                                <tbody id="bomTableBody"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- N3: Costing -->
-                <div id="n3" class="sub-page">
-                    <div class="card"><div class="under-construction"><span class="icon">💰</span><h2>Costing Module</h2><p>Costing module is under development.</p></div></div>
-                </div>
-
-                <!-- N4: BOM Approval -->
-                <div id="n4" class="sub-page">
-                    <div class="card"><div class="under-construction"><span class="icon">✅</span><h2>BOM Approval</h2><p>BOM approval workflow under construction.</p></div></div>
-                </div>
+                <div id="n1" class="sub-page active">...</div>
+                <div id="n2" class="sub-page">...</div>
+                <div id="n3" class="sub-page">...</div>
+                <div id="n4" class="sub-page">...</div>
             </div>
 
-            <!-- ========================================================== -->
-            <!-- TAB 2: Procurement                                          -->
-            <!-- ========================================================== -->
             <div id="tab2" class="page">
                 <div class="sub-tabs" id="subTabs-tab2">
                     <button class="sub-tab active" onclick="switchSubTab('tab2','n5')">N5: Supplier List</button>
-                    <button class="sub-tab" onclick="switchSubTab('tab2','n6')">N6: Purchase Requisition</button>
+                    <button class="sub-tab" onclick="switchSubTab('tab2','n6')">N6: Purchase Req</button>
                     <button class="sub-tab" onclick="switchSubTab('tab2','n7')">N7: PO Creation</button>
                     <button class="sub-tab" onclick="switchSubTab('tab2','n8')">N8: PO Approval</button>
                     <button class="sub-tab" onclick="switchSubTab('tab2','n9')">N9: Logistics</button>
                     <button class="sub-tab" onclick="switchSubTab('tab2','n10')">N10: RM Dispatch</button>
                 </div>
-                <div id="n5" class="sub-page active"><div class="card"><h3>Supplier List</h3><p style="color:#94a3b8;">Manage suppliers (coming soon).</p></div></div>
-                <div id="n6" class="sub-page"><div class="card"><h3>Purchase Requisition</h3><p style="color:#94a3b8;">Create purchase requisitions (coming soon).</p></div></div>
-                <div id="n7" class="sub-page"><div class="card"><h3>PO Creation</h3><p style="color:#94a3b8;">Create purchase orders (coming soon).</p></div></div>
-                <div id="n8" class="sub-page"><div class="card"><h3>PO Approval</h3><p style="color:#94a3b8;">Approve purchase orders (coming soon).</p></div></div>
-                <div id="n9" class="sub-page"><div class="card"><h3>Logistics</h3><p style="color:#94a3b8;">Logistics management (coming soon).</p></div></div>
-                <div id="n10" class="sub-page"><div class="card"><h3>RM Dispatch</h3><p style="color:#94a3b8;">Raw material dispatch (coming soon).</p></div></div>
+                <div id="n5" class="sub-page active">...</div>
+                <div id="n6" class="sub-page">...</div>
+                <div id="n7" class="sub-page">...</div>
+                <div id="n8" class="sub-page">...</div>
+                <div id="n9" class="sub-page">...</div>
+                <div id="n10" class="sub-page">...</div>
             </div>
 
-            <!-- ========================================================== -->
-            <!-- TAB 3: Warehouse                                            -->
-            <!-- ========================================================== -->
             <div id="tab3" class="page">
                 <div class="sub-tabs" id="subTabs-tab3">
                     <button class="sub-tab active" onclick="switchSubTab('tab3','n11')">N11: Quality Inspection</button>
                     <button class="sub-tab" onclick="switchSubTab('tab3','n12')">N12: RM Return</button>
                     <button class="sub-tab" onclick="switchSubTab('tab3','n13')">N13: GRN</button>
                 </div>
-                <div id="n11" class="sub-page active"><div class="card"><h3>Quality Inspection</h3><p style="color:#94a3b8;">Inspect incoming raw materials (coming soon).</p></div></div>
-                <div id="n12" class="sub-page"><div class="card"><h3>RM Return</h3><p style="color:#94a3b8;">Return raw materials (coming soon).</p></div></div>
-                <div id="n13" class="sub-page"><div class="card"><h3>GRN</h3><p style="color:#94a3b8;">Goods Receipt Note (coming soon).</p></div></div>
+                <div id="n11" class="sub-page active">...</div>
+                <div id="n12" class="sub-page">...</div>
+                <div id="n13" class="sub-page">...</div>
             </div>
 
-            <!-- ========================================================== -->
-            <!-- TAB 4: Production                                           -->
-            <!-- ========================================================== -->
             <div id="tab4" class="page">
                 <div class="sub-tabs" id="subTabs-tab4">
-                    <button class="sub-tab active" onclick="switchSubTab('tab4','n14')">N14: Prod. Order Release</button>
+                    <button class="sub-tab active" onclick="switchSubTab('tab4','n14')">N14: Prod. Order</button>
                     <button class="sub-tab" onclick="switchSubTab('tab4','n15')">N15: Material Issue</button>
                 </div>
-                <div id="n14" class="sub-page active"><div class="card"><h3>Production Order Release</h3><p style="color:#94a3b8;">Release production orders (coming soon).</p></div></div>
-                <div id="n15" class="sub-page"><div class="card"><h3>Material Issue</h3><p style="color:#94a3b8;">Issue raw materials to production (coming soon).</p></div></div>
+                <div id="n14" class="sub-page active">...</div>
+                <div id="n15" class="sub-page">...</div>
             </div>
 
-            <!-- ========================================================== -->
-            <!-- TAB 5: Settings                                             -->
-            <!-- ========================================================== -->
             <div id="tab5" class="page">
                 <div class="sub-tabs" id="subTabs-tab5">
                     <button class="sub-tab active" onclick="switchSubTab('tab5','n16')">N16: TTL</button>
                     <button class="sub-tab" onclick="switchSubTab('tab5','n17')">N17: Headers</button>
                     <button class="sub-tab" onclick="switchSubTab('tab5','n18')">N18: Notifications</button>
                 </div>
-                <div id="n16" class="sub-page active"><div class="card"><h3>TTL Settings</h3><p style="color:#94a3b8;">Time to live settings (coming soon).</p></div></div>
-                <div id="n17" class="sub-page"><div class="card"><h3>Headers</h3><p style="color:#94a3b8;">Configure report headers (coming soon).</p></div></div>
-                <div id="n18" class="sub-page"><div class="card"><h3>Notifications</h3><p style="color:#94a3b8;">Notification preferences (coming soon).</p></div></div>
+                <div id="n16" class="sub-page active">...</div>
+                <div id="n17" class="sub-page">...</div>
+                <div id="n18" class="sub-page">...</div>
             </div>
-
-            <!-- ========================================================== -->
-            <!-- TAB 6: Reports                                              -->
-            <!-- ========================================================== -->
-            <div id="tab6" class="page">
-                <div class="card">
-                    <h3>Reports Dashboard</h3>
-                    <div style="margin-bottom:30px;">
-                        <h4 style="color:#38bdf8;border-bottom:none;">PPM / Internal Issue Wise RM Requirement</h4>
-                        <div class="report-actions">
-                            <button class="btn btn-success" onclick="generateRequirementReport()" style="background:#7c3aed;margin-top:0;">📊 Generate</button>
-                            <button class="btn btn-success" onclick="exportRequirementReportCSV()" style="background:#16a34a;margin-top:0;">📥 CSV</button>
-                            <button class="btn btn-success" onclick="exportRequirementReportExcel()" style="background:#2563eb;margin-top:0;">📥 Excel</button>
-                            <button class="btn btn-secondary" onclick="printRequirementReport()" style="margin-top:0;">🖨️ Print</button>
-                        </div>
-                        <div id="requirementReportContainer" style="overflow-x:auto;max-height:500px;overflow-y:auto;border:1px solid #334155;border-radius:10px;">
-                            <p style="color:#94a3b8;padding:20px;text-align:center;">Click Generate Report to load data.</p>
-                        </div>
-                    </div>
-                    <div>
-                        <h4 style="color:#34d399;border-bottom:none;">Stock Position Report</h4>
-                        <div class="report-actions">
-                            <button class="btn btn-success" onclick="generateStockReport()" style="background:#059669;margin-top:0;">📊 Generate</button>
-                            <button class="btn btn-success" onclick="exportStockReportCSV()" style="background:#16a34a;margin-top:0;">📥 CSV</button>
-                            <button class="btn btn-success" onclick="exportStockReportExcel()" style="background:#2563eb;margin-top:0;">📥 Excel</button>
-                            <button class="btn btn-secondary" onclick="printStockReport()" style="margin-top:0;">🖨️ Print</button>
-                        </div>
-                        <div id="stockReportContainer" style="overflow-x:auto;max-height:500px;overflow-y:auto;border:1px solid #334155;border-radius:10px;">
-                            <p style="color:#94a3b8;padding:20px;text-align:center;">Click Generate Report to load data.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div><!-- end .content -->
-
-        <!-- Modals -->
-        <div id="buyerModal"><div class="modal-box"><div id="buyerAuthSection"><h3 style="color:#38bdf8;margin-bottom:20px;">🔐 Authentication Required</h3><p style="color:#94a3b8;margin-bottom:20px;">Please enter the admin password to add a new buyer.</p><div class="form-row"><div><label>Password</label><input id="buyerAuthPassword" type="password" placeholder="Enter admin password" /></div></div><button class="btn btn-success" onclick="authenticateBuyer()" style="margin-top:10px;">🔓 Verify &amp; Continue</button><button class="btn btn-secondary" onclick="closeBuyerModal()" style="margin-top:10px;">Cancel</button></div><div id="buyerFormSection" style="display:none;"><h3 style="color:#38bdf8;margin-bottom:20px;">➕ Add New Buyer</h3><div class="form-section" style="background:#0f172a;"><div class="form-row"><div><label>Business Name *</label><input id="buyer_businessName" placeholder="Enter business name" required /></div><div><label>GST No. *</label><input id="buyer_gst" placeholder="GSTIN (e.g. 22AAAAA0000A1Z5)" required /></div></div><div class="form-row"><div><label>Payment Terms *</label><select id="buyer_paymentTerms" required><option value="">Select Payment Terms</option><option value="Advance">Advance</option><option value="Credit 15 Days">Credit 15 Days</option><option value="Credit 30 Days">Credit 30 Days</option><option value="Credit 45 Days">Credit 45 Days</option><option value="Credit 60 Days">Credit 60 Days</option><option value="COD">COD</option><option value="LC">LC</option><option value="TT">TT</option></select></div><div><label>Correspondence Address *</label><input id="buyer_address" placeholder="Full address" required /></div></div><div class="form-row"><div><label>Contact Person *</label><input id="buyer_contactPerson" placeholder="Contact person name" required /></div><div><label>Contact Number *</label><input id="buyer_contactNumber" placeholder="Phone number" required /></div></div><button class="btn btn-success" onclick="saveBuyer()" style="margin-top:10px;">💾 Save Buyer</button><button class="btn btn-secondary" onclick="closeBuyerModal()" style="margin-top:10px;">Cancel</button></div></div></div></div>
-
-        <div id="bomWorkspace"><div class="workspace-box"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;"><h3 style="color:#38bdf8;margin:0;">Bill Of Materials - Workspace</h3><button class="btn btn-secondary" onclick="closeBOMWorkspace()" style="margin:0;padding:10px 24px;">✕ Close</button></div><div id="bomFormContent"><div id="bomFormFields"><div class="form-section" style="background:#0f172a;"><div class="form-row"><div><label>BUYER</label><input id="bom_buyer" readonly /></div><div><label>BUYER ORDER NO</label><input id="bom_buyerOrderNo" readonly /></div><div><label>BUYER ORDER DATE</label><input id="bom_buyerOrderDate" readonly /></div></div><div class="form-row"><div><label>DESIGN NO.</label><input id="bom_designNo" readonly /></div><div><label>COLOR NO.</label><input id="bom_colorNo" readonly /></div><div><label>FG KEY</label><input id="bom_fgKey" readonly /></div></div><div class="form-row"><div><label>CREATED BY</label><input id="bom_createdBy" readonly /></div><div><label>CREATED AT</label><input id="bom_createdAt" readonly /></div><div><label>LAST EDITED BY</label><input id="bom_lastEditedBy" readonly /></div><div><label>LAST EDITED AT</label><input id="bom_lastEditedAt" readonly /></div></div><div id="bomLockStatus" style="color:#fbbf24;font-weight:700;padding:8px 12px;background:#1e293b;border-radius:8px;margin-bottom:12px;display:none;">🔒 BOM LOCKED - PICKING ALREADY STARTED</div><div style="margin-top:16px;"><h4 style="color:#38bdf8;">Raw Materials</h4><p style="color:#94a3b8;font-size:0.85rem;margin-bottom:12px;">Add materials below. Click <strong>Size Sensitive</strong> to enable per-size consumption.</p><div id="bomMaterialsContainer"></div><button class="btn btn-success" onclick="addBomMaterial()" style="margin-top:10px;padding:8px 20px;font-size:0.9rem;" id="bomAddMaterialBtn">➕ Add Material Row</button></div></div><div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap;"><button class="btn btn-success" id="bomSaveBtn" onclick="saveBOM()">💾 Save BOM</button><button class="btn btn-secondary" onclick="closeBOMWorkspace()">Close</button></div></div><div id="bomLoading" style="text-align:center;padding:40px;color:#94a3b8;">Loading BOM data...</div></div></div></div>
-
-        <div id="pickerModal"><div class="modal-box"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;"><h3 style="color:#38bdf8;margin:0;">Pick Item</h3><button class="btn btn-secondary" onclick="closePickerModal()" style="margin:0;padding:10px 24px;">✕ Close</button></div><div id="pickerFormContent"><div class="form-section" style="background:#0f172a;"><div class="form-row"><div><label>FG KEY</label><input id="pick_fgKey" readonly /></div><div><label>PPM NO</label><input id="pick_ppmNo" readonly /></div><div><label>RM ITEM NO</label><input id="pick_rmItemNo" readonly /></div></div><div class="form-row"><div><label>RM ITEM NAME</label><input id="pick_rmItemName" readonly /></div><div><label>REQUIRED QTY</label><input id="pick_requiredQty" readonly style="color:#38bdf8;font-weight:700;" /></div><div><label>ALREADY PICKED</label><input id="pick_alreadyPicked" readonly style="color:#fbbf24;font-weight:700;" /></div></div><div class="form-row"><div><label>BALANCE TO PICK</label><input id="pick_balanceQty" readonly style="color:#22c55e;font-weight:700;" /></div><div><label>AVAILABLE STOCK</label><input id="pick_availableStock" readonly style="color:#60a5fa;font-weight:700;" /></div><div><label>AVAILABLE LOCATIONS</label><input id="pick_availableLocations" readonly /></div></div><div class="form-row"><div><label>PICK QTY *</label><input id="pick_qty" type="number" placeholder="Enter quantity to pick" min="1" /></div><div><label>PICK LOCATION *</label><select id="pick_location" style="width:100%;"><option value="">Select Location</option></select></div><div><label>EXTRA PICK (Optional)</label><input id="pick_extraQty" type="number" placeholder="Extra quantity" min="0" /></div></div></div><div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap;"><button class="btn btn-success" onclick="savePick()">📦 Confirm Pick</button><button class="btn btn-secondary" onclick="closePickerModal()">Cancel</button></div></div><div id="pickerLoading" style="text-align:center;padding:40px;color:#94a3b8;">Loading...</div></div></div>
-
-        <div id="noticeModal"><div class="notice-box"><span class="notice-icon" id="noticeIcon">📢</span><h2 id="noticeTitle">NOTICE!</h2><div class="notice-message-scroll"><p id="noticeMessage">This is a system notification.</p></div><div class="notice-actions"><button class="btn btn-success" onclick="closeNotice()" style="background:#2563eb;" id="noticeOkBtn">OK</button><button class="btn btn-secondary" onclick="closeNotice()" id="noticeDismissBtn">Dismiss</button><button class="btn btn-success" id="noticePrintBtn" style="background:#7c3aed;display:none;" onclick="printNotice()">🖨️ Print</button></div></div></div>
-
-        <div id="fullscreenLoader"><div class="loader-spinner"></div><div class="loader-text" id="loaderText">Processing...</div></div>
-
-    </div><!-- end #mainApp -->
-
+            
+            <div id="tab6" class="page">...</div>
+        </div>
+        
+        </div>
     <script src="app.js"></script>
 </body>
 </html>
