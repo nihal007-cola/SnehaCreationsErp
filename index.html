@@ -1,128 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-    <title>Sneha Creations – Raw Material Management</title>
-    <link rel="icon" href="favicon.ico" sizes="any" />
-    <link rel="apple-touch-icon" href="logo.png" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Sneha Creations – ERP (Node-Based)</title>
+  <!-- styles.css will be injected here for single-file demo, but split into 3 parts as requested -->
+  <link rel="stylesheet" href="styles.css">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div id="loginPage" class="active">
-        <div class="login-container">
-            <div class="logo-section">
-                <img src="https://raw.githubusercontent.com/nihal007-cola/nihal007-cola.github.io/main/ChatGPT%20Image%20Jun%2017%2C%202026%2C%2009_29_09%20AM.png" alt="Sneha Creations Logo" class="logo-square pulse" />
-                <div class="brand-name">Sneha Creations</div>
-                <div class="brand-tagline">Raw Material Management</div>
-                <div class="brand-subtitle">Powered by Offices of Nawnit Nihal</div>
-            </div>
-            <div id="methodSelector" class="login-screen active">
-                <div style="text-align:center;margin-bottom:24px;"><p style="color:#94a3b8;font-size:0.95rem;">Choose your login method</p></div>
-                <div class="method-grid">
-                    <div class="method-card" onclick="selectMethod('telegram')"><span class="icon">📱</span><div class="label">Telegram</div><div class="sub">OTP via Telegram</div></div>
-                    <div class="method-card" onclick="selectMethod('email')"><span class="icon">✉️</span><div class="label">Email</div><div class="sub">Email &amp; Password</div></div>
-                </div>
-                <div class="divider">OR</div>
-                <button class="login-btn login-btn-outline" onclick="showSignupMethodSelector()">✨ Create New Account</button>
-            </div>
-            <div id="signupMethodSelector" class="login-screen"></div>
-            <div id="telegramPhoneScreen" class="login-screen"></div>
-            <div id="telegramOtpScreen" class="login-screen"></div>
-            <div id="telegramSignupScreen" class="login-screen"></div>
-            <div id="telegramSignupSuccessScreen" class="login-screen"></div>
-            <div id="emailLoginScreen" class="login-screen"></div>
-            <div id="emailSignupScreen" class="login-screen"></div>
-            <div id="emailSignupSuccessScreen" class="login-screen"></div>
+<!-- ===== LOGIN PAGE ===== -->
+<div id="loginPage" class="active">
+  <div class="login-container">
+    <div class="logo-section">
+      <img src="https://raw.githubusercontent.com/nihal007-cola/nihal007-cola.github.io/main/ChatGPT%20Image%20Jun%2017%2C%202026%2C%2009_29_09%20AM.png" alt="Sneha Creations Logo" class="logo-square" />
+      <div class="brand-name">Sneha Creations</div>
+      <div class="brand-tagline">ERP · Node Based</div>
+      <div class="brand-subtitle">Powered by Offices of Nawnit Nihal</div>
+    </div>
+    <div id="methodSelector" class="login-screen active">
+      <div class="method-grid">
+        <div class="method-card" onclick="loginAs('ADMIN')"><span class="icon">🔐</span><div class="label">Admin</div><div class="sub">Full access</div></div>
+        <div class="method-card" onclick="loginAs('USER')"><span class="icon">👤</span><div class="label">User</div><div class="sub">Standard access</div></div>
+      </div>
+      <div style="margin-top:24px;text-align:center;color:#64748b;font-size:.9rem;">Demo login · no password required</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MAIN APP ===== -->
+<div id="mainApp">
+  <header class="header">
+    <div class="brand">
+      <img src="https://raw.githubusercontent.com/nihal007-cola/nihal007-cola.github.io/main/ChatGPT%20Image%20Jun%2017%2C%202026%2C%2009_29_09%20AM.png" alt="Sneha Creations Logo" class="logo" />
+      <div><h2>Sneha Creations</h2><small>ERP · Node Based</small><p>Powered by Offices of Nawnit Nihal</p></div>
+    </div>
+    <div class="user"><span id="userDisplayName">ADMIN</span><button onclick="logoutUser()">Logout</button></div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab active" onclick="openTab(event,'fgorder')">📦 FG ORDER</button>
+    <button class="tab" onclick="openTab(event,'rawmaterial')">🧾 RAW MATERIAL</button>
+    <button class="tab" onclick="openTab(event,'warehouse')">🏭 WAREHOUSE</button>
+    <button class="tab" onclick="openTab(event,'production')">⚙️ PRODUCTION</button>
+    <button class="tab" onclick="openTab(event,'settings')">⚙️ SETTINGS</button>
+    <button class="tab" onclick="openTab(event,'reports')">📊 REPORTS</button>
+  </nav>
+
+  <div class="content">
+
+    <!-- ============================================================ -->
+    <!-- FG ORDER – Acceptance, BOM, Costing, Approval                -->
+    <!-- ============================================================ -->
+    <div id="fgorder" class="page active">
+      <div class="card">
+        <h3>📦 FG ORDER</h3>
+        <div class="node-grid">
+          <div class="node-card"><div class="node-title">FG Order Acceptance <span class="node-badge">active</span></div><div class="node-desc">Accept customer order</div></div>
+          <div class="node-card"><div class="node-title">BOM Creation <span class="node-badge">pending</span></div><div class="node-desc">Build Bill of Materials</div></div>
+          <div class="node-card"><div class="node-title">Costing <span class="node-badge">draft</span></div><div class="node-desc">Calculate costs</div></div>
+          <div class="node-card"><div class="node-title">BOM Approval <span class="node-badge">waiting</span></div><div class="node-desc">Approve BOM</div></div>
         </div>
+        <div class="form-section" style="margin-top:18px;">
+          <div class="form-row">
+            <div><label>Order No</label><input id="fgOrderNo" value="FG-2026-001" readonly /></div>
+            <div><label>Buyer</label><input id="fgBuyer" placeholder="Buyer name" /></div>
+            <div><label>Design</label><input id="fgDesign" placeholder="Design code" /></div>
+            <div><label>Color</label><input id="fgColor" placeholder="Color" /></div>
+          </div>
+          <div class="form-row">
+            <div><label>Total Qty</label><input id="fgTotalQty" type="number" placeholder="0" /></div>
+            <div><label>Delivery Date</label><input id="fgDelivery" type="date" /></div>
+            <div><label>Status</label>
+              <select id="fgStatus"><option>Accepted</option><option>BOM Created</option><option>Costed</option><option>Approved</option></select>
+            </div>
+            <div style="display:flex;align-items:flex-end;"><button class="btn btn-success" onclick="showNotice('✅','FG Order updated (demo)','success')">Save</button></div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div id="mainApp">
-        <header class="header">
-            <div class="brand">
-                <img src="https://raw.githubusercontent.com/nihal007-cola/nihal007-cola.github.io/main/ChatGPT%20Image%20Jun%2017%2C%202026%2C%2009_29_09%20AM.png" alt="Sneha Creations Logo" class="logo" />
-                <div><h2>Sneha Creations</h2><small>Raw Material Management</small><p>Powered by Offices of Nawnit Nihal</p></div>
-            </div>
-            <div class="user"><span id="userDisplayName">ADMIN</span><button onclick="logoutUser()">Logout</button></div>
-        </header>
-
-        <nav class="tabs" id="mainTabs">
-            <button class="tab active" onclick="switchMainTab('tab1')">📋 Orders &amp; BOM</button>
-            <button class="tab" onclick="switchMainTab('tab2')">📦 Procurement</button>
-            <button class="tab" onclick="switchMainTab('tab3')">🏢 Warehouse</button>
-            <button class="tab" onclick="switchMainTab('tab4')">⚙️ Production</button>
-            <button class="tab" onclick="switchMainTab('tab5')">⚙️ Settings</button>
-            <button class="tab" onclick="switchMainTab('tab6')">📊 Reports</button>
-        </nav>
-
-        <div class="content">
-            <div id="tab1" class="page active">
-                <div class="sub-tabs" id="subTabs-tab1">
-                    <button class="sub-tab active" onclick="switchSubTab('tab1','n1')">N1: FG Order</button>
-                    <button class="sub-tab" onclick="switchSubTab('tab1','n2')">N2: BOM Creation</button>
-                    <button class="sub-tab" onclick="switchSubTab('tab1','n3')">N3: Costing</button>
-                    <button class="sub-tab" onclick="switchSubTab('tab1','n4')">N4: BOM Approval</button>
-                </div>
-                <div id="n1" class="sub-page active">...</div>
-                <div id="n2" class="sub-page">...</div>
-                <div id="n3" class="sub-page">...</div>
-                <div id="n4" class="sub-page">...</div>
-            </div>
-
-            <div id="tab2" class="page">
-                <div class="sub-tabs" id="subTabs-tab2">
-                    <button class="sub-tab active" onclick="switchSubTab('tab2','n5')">N5: Supplier List</button>
-                    <button class="sub-tab" onclick="switchSubTab('tab2','n6')">N6: Purchase Req</button>
-                    <button class="sub-tab" onclick="switchSubTab('tab2','n7')">N7: PO Creation</button>
-                    <button class="sub-tab" onclick="switchSubTab('tab2','n8')">N8: PO Approval</button>
-                    <button class="sub-tab" onclick="switchSubTab('tab2','n9')">N9: Logistics</button>
-                    <button class="sub-tab" onclick="switchSubTab('tab2','n10')">N10: RM Dispatch</button>
-                </div>
-                <div id="n5" class="sub-page active">...</div>
-                <div id="n6" class="sub-page">...</div>
-                <div id="n7" class="sub-page">...</div>
-                <div id="n8" class="sub-page">...</div>
-                <div id="n9" class="sub-page">...</div>
-                <div id="n10" class="sub-page">...</div>
-            </div>
-
-            <div id="tab3" class="page">
-                <div class="sub-tabs" id="subTabs-tab3">
-                    <button class="sub-tab active" onclick="switchSubTab('tab3','n11')">N11: Quality Inspection</button>
-                    <button class="sub-tab" onclick="switchSubTab('tab3','n12')">N12: RM Return</button>
-                    <button class="sub-tab" onclick="switchSubTab('tab3','n13')">N13: GRN</button>
-                </div>
-                <div id="n11" class="sub-page active">...</div>
-                <div id="n12" class="sub-page">...</div>
-                <div id="n13" class="sub-page">...</div>
-            </div>
-
-            <div id="tab4" class="page">
-                <div class="sub-tabs" id="subTabs-tab4">
-                    <button class="sub-tab active" onclick="switchSubTab('tab4','n14')">N14: Prod. Order</button>
-                    <button class="sub-tab" onclick="switchSubTab('tab4','n15')">N15: Material Issue</button>
-                </div>
-                <div id="n14" class="sub-page active">...</div>
-                <div id="n15" class="sub-page">...</div>
-            </div>
-
-            <div id="tab5" class="page">
-                <div class="sub-tabs" id="subTabs-tab5">
-                    <button class="sub-tab active" onclick="switchSubTab('tab5','n16')">N16: TTL</button>
-                    <button class="sub-tab" onclick="switchSubTab('tab5','n17')">N17: Headers</button>
-                    <button class="sub-tab" onclick="switchSubTab('tab5','n18')">N18: Notifications</button>
-                </div>
-                <div id="n16" class="sub-page active">...</div>
-                <div id="n17" class="sub-page">...</div>
-                <div id="n18" class="sub-page">...</div>
-            </div>
-            
-            <div id="tab6" class="page">...</div>
+    <!-- ============================================================ -->
+    <!-- RAW MATERIAL – Supplier List, PR, PO, Approval, Logistics, Dispatch -->
+    <!-- ============================================================ -->
+    <div id="rawmaterial" class="page">
+      <div class="card">
+        <h3>🧾 RAW MATERIAL</h3>
+        <div class="node-grid">
+          <div class="node-card"><div class="node-title">Supplier List <span class="node-badge">active</span></div><div class="node-desc">Manage suppliers</div></div>
+          <div class="node-card"><div class="node-title">Purchase Requisition <span class="node-badge">pending</span></div><div class="node-desc">Create PR</div></div>
+          <div class="node-card"><div class="node-title">PO Creation <span class="node-badge">draft</span></div><div class="node-desc">Purchase Order</div></div>
+          <div class="node-card"><div class="node-title">PO Approval <span class="node-badge">waiting</span></div><div class="node-desc">Approve PO</div></div>
+          <div class="node-card"><div class="node-title">Inbound Logistics <span class="node-badge">planning</span></div><div class="node-desc">Plan logistics</div></div>
+          <div class="node-card"><div class="node-title">RM Dispatch <span class="node-badge">✈️</span></div><div class="node-desc">Supplier invoice & AWB</div></div>
         </div>
-        
+        <div class="form-section" style="margin-top:18px;">
+          <div class="form-row">
+            <div><label>Supplier</label><input id="rmSupplier" placeholder="Supplier name" /></div>
+            <div><label>Item</label><input id="rmItem" placeholder="Raw material" /></div>
+            <div><label>Qty</label><input id="rmQty" type="number" placeholder="0" /></div>
+            <div><label>UOM</label><select id="rmUom"><option>KG</option><option>PCS</option><option>MTR</option></select></div>
+          </div>
+          <button class="btn btn-success" onclick="showNotice('✅','Raw material procurement updated (demo)','success')">Update</button>
         </div>
-    <script src="app.js"></script>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- WAREHOUSE – QC, Return, GRN (binning & stock)                -->
+    <!-- ============================================================ -->
+    <div id="warehouse" class="page">
+      <div class="card">
+        <h3>🏭 WAREHOUSE</h3>
+        <div class="node-grid">
+          <div class="node-card"><div class="node-title">Quality Inspection <span class="node-badge">QC</span></div><div class="node-desc">Pass / Fail</div></div>
+          <div class="node-card"><div class="node-title">RM Return <span class="node-badge">return</span></div><div class="node-desc">AWB & Return invoice</div></div>
+          <div class="node-card"><div class="node-title">GRN <span class="node-badge">✅</span></div><div class="node-desc">Binning & stock building</div></div>
+        </div>
+        <div class="form-section" style="margin-top:18px;">
+          <div class="form-row">
+            <div><label>GRN No</label><input id="grnNo" value="GRN-2026-001" readonly /></div>
+            <div><label>Item</label><input id="grnItem" placeholder="Item name" /></div>
+            <div><label>Qty Received</label><input id="grnQty" type="number" placeholder="0" /></div>
+            <div><label>Bin Location</label><input id="grnBin" placeholder="e.g. B-12" /></div>
+          </div>
+          <button class="btn btn-success" onclick="showNotice('✅','GRN processed (demo)','success')">Process GRN</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- PRODUCTION – Order Release, Material Issue                   -->
+    <!-- ============================================================ -->
+    <div id="production" class="page">
+      <div class="card">
+        <h3>⚙️ PRODUCTION</h3>
+        <div class="node-grid">
+          <div class="node-card"><div class="node-title">Production Order Release <span class="node-badge">release</span></div><div class="node-desc">Release to shop floor</div></div>
+          <div class="node-card"><div class="node-title">Material Issue <span class="node-badge">stock</span></div><div class="node-desc">Stock reduction</div></div>
+        </div>
+        <div class="form-section" style="margin-top:18px;">
+          <div class="form-row">
+            <div><label>Production Order</label><input id="prodOrder" value="PO-2026-001" readonly /></div>
+            <div><label>FG Item</label><input id="prodFg" placeholder="FG code" /></div>
+            <div><label>Qty to Produce</label><input id="prodQty" type="number" placeholder="0" /></div>
+            <div><label>Issue Date</label><input id="prodIssueDate" type="date" /></div>
+          </div>
+          <button class="btn btn-warning" onclick="showNotice('⚙️','Production release & material issue (demo)','warning')">Release & Issue</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SETTINGS – TTL per node, Notification settings               -->
+    <!-- ============================================================ -->
+    <div id="settings" class="page">
+      <div class="card">
+        <h3>⚙️ SETTINGS</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;">
+          <div class="form-section">
+            <h4 style="border:none;color:#38bdf8;">⏱️ Time to Live per Node</h4>
+            <div class="form-row"><div><label>FG Order Acceptance (days)</label><input type="number" value="2" /></div></div>
+            <div class="form-row"><div><label>BOM Creation (days)</label><input type="number" value="3" /></div></div>
+            <div class="form-row"><div><label>Costing (days)</label><input type="number" value="1" /></div></div>
+            <div class="form-row"><div><label>BOM Approval (days)</label><input type="number" value="2" /></div></div>
+            <div class="form-row"><div><label>PO Approval (days)</label><input type="number" value="2" /></div></div>
+            <div class="form-row"><div><label>Logistics (days)</label><input type="number" value="5" /></div></div>
+            <div class="form-row"><div><label>Quality Inspection (days)</label><input type="number" value="1" /></div></div>
+            <div class="form-row"><div><label>GRN (days)</label><input type="number" value="1" /></div></div>
+          </div>
+          <div class="form-section">
+            <h4 style="border:none;color:#38bdf8;">🔔 Notification & Concerned Settings</h4>
+            <div class="form-row"><div><label>Alert Email</label><input type="email" placeholder="ops@company.com" /></div></div>
+            <div class="form-row"><div><label>Telegram Chat ID</label><input placeholder="e.g. -123456789" /></div></div>
+            <div class="form-row"><div><label>Notification Threshold (days)</label><input type="number" value="1" /></div></div>
+            <div style="margin-top:12px;display:flex;gap:12px;flex-wrap:wrap;">
+              <label><input type="checkbox" checked /> Notify on PO Approval</label>
+              <label><input type="checkbox" /> Notify on QC Fail</label>
+              <label><input type="checkbox" checked /> Notify on GRN</label>
+            </div>
+            <button class="btn btn-purple" onclick="showNotice('✅','Settings saved (demo)','success')" style="margin-top:16px;">Save Settings</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- REPORTS                                                      -->
+    <!-- ============================================================ -->
+    <div id="reports" class="page">
+      <div class="card">
+        <h3>📊 REPORTS</h3>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+          <button class="btn btn-success" onclick="showNotice('📊','Stock report (demo)','info')">Stock Position</button>
+          <button class="btn btn-purple" onclick="showNotice('📊','Requirement report (demo)','info')">RM Requirement</button>
+          <button class="btn btn-secondary" onclick="showNotice('🖨️','Print (demo)','info')">Print</button>
+        </div>
+        <div style="padding:20px;background:#0f172a;border-radius:12px;border:1px solid #2a3a5a;color:#94a3b8;text-align:center;">Report data will appear here (demo).</div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+
+  <!-- ===== NOTICE MODAL ===== -->
+  <div id="noticeModal">
+    <div class="notice-box">
+      <span class="notice-icon" id="noticeIcon">📢</span>
+      <h2 id="noticeTitle">Notice</h2>
+      <p id="noticeMessage">Message</p>
+      <div class="notice-actions"><button class="btn btn-success" onclick="closeNotice()">OK</button></div>
+    </div>
+  </div>
+
+  <!-- ===== LOADER ===== -->
+  <div id="fullscreenLoader"><div class="loader-spinner"></div><div class="loader-text">Loading...</div></div>
+</div>
+
+<!-- ============================================================ -->
+<!-- app.js will be linked here                                    -->
+<!-- ============================================================ -->
+<script src="app.js"></script>
 </body>
 </html>
