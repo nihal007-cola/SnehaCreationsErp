@@ -1,58 +1,40 @@
-// ============================================================
-// SNEHA ERP - CORE ENGINE
-// ============================================================
-
-// 1. Tab Navigation Logic
+// Tab Navigation
 function openModule(evt, moduleName) {
     const modules = document.getElementsByClassName("module-content");
-    for (let i = 0; i < modules.length; i++) {
-        modules[i].style.display = "none";
-    }
+    for (let i = 0; i < modules.length; i++) modules[i].style.display = "none";
     const tablinks = document.getElementsByClassName("tab-link");
-    for (let i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
+    for (let i = 0; i < tablinks.length; i++) tablinks[i].classList.remove("active");
     document.getElementById(moduleName).style.display = "block";
-    evt.currentTarget.className += " active";
+    evt.currentTarget.classList.add("active");
 }
 
-// 2. Security Sanitizer (Anti-XSS & Anti-Formula Injection)
+// Security: Strip HTML and neutralize CSV formula injection
 function sanitizeInput(value) {
     if (typeof value !== 'string') return value;
-    // Strip HTML/Script Tags
     let sanitized = value.replace(/[<>]/g, '');
-    // Neutralize Excel/CSV Injection prefixes (=, +, -, @)
-    if (/^[=+\-@\t\r]/.test(sanitized)) {
-        sanitized = "'" + sanitized;
-    }
+    if (/^[=+\-@\t\r]/.test(sanitized)) sanitized = "'" + sanitized;
     return sanitized.trim();
 }
 
-// 3. Bulk CSV Upload Handler (PapaParse Integration)
+// Bulk Upload Logic
 document.getElementById('n1-bulk-upload').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    
-    Papa.parse(file, {
+    Papa.parse(e.target.files[0], {
         header: true,
         skipEmptyLines: true,
         complete: function(results) {
             const securePayload = results.data.map(row => {
-                let sanitizedRow = {};
-                for (let key in row) {
-                    sanitizedRow[sanitizeInput(key)] = sanitizeInput(row[key]);
-                }
-                return sanitizedRow;
+                let s = {};
+                for (let k in row) s[sanitizeInput(k)] = sanitizeInput(row[k]);
+                return s;
             });
-            console.log("Secure Bulk Payload Ready:", securePayload);
-            // Future step: send securePayload to FastAPI
+            console.log("Bulk Payload Ready for API:", securePayload);
         }
     });
 });
 
-// 4. Form Submission Handler (N1)
+// Single Entry Submission
 document.getElementById('form-n1').addEventListener('submit', function(e) {
     e.preventDefault();
-    
     const formData = {
         buyerName: sanitizeInput(document.getElementById('buyer-name').value),
         buyerGstin: sanitizeInput(document.getElementById('buyer-gstin').value),
@@ -64,7 +46,10 @@ document.getElementById('form-n1').addEventListener('submit', function(e) {
         sizeMatrix: sanitizeInput(document.getElementById('size-matrix').value),
         notes: sanitizeInput(document.getElementById('n1-notes').value)
     };
-
-    console.log("ART Token Payload Ready:", formData);
-    alert("FG Order Token (ART) Generated Locally!");
+    console.log("ART Token Payload:", formData);
+    alert("FG Token generated. Ready for API injection.");
 });
+
+function downloadCSVTemplate() {
+    alert("Downloading CSV template for N1 FG Order...");
+}

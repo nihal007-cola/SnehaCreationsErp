@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sneha Creations ERP</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
 </head>
 <body>
     <div class="app-container">
@@ -20,37 +21,39 @@
 
         <main class="content-area">
             <div id="orders-bom" class="module-content" style="display: block;">
-                <h3>Orders & BOM</h3>
-                <p>FG Order Acceptance, Costing, and BOM forms will render here.</p>
+                <h3>N1: FG Order Acceptance</h3>
+                <div class="action-bar" style="margin-bottom: 20px;">
+                    <button class="btn-secondary" onclick="downloadCSVTemplate()">Download CSV Format</button>
+                    <input type="file" id="n1-bulk-upload" accept=".csv" style="margin-left: 10px;">
+                </div>
+                <form id="form-n1" class="erp-form">
+                    <div class="form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <input type="text" id="buyer-name" placeholder="Buyer Name" required>
+                        <input type="text" id="buyer-gstin" placeholder="Buyer GSTIN" required>
+                        <select id="buyer-state-code" required>
+                            <option value="">Select State Code</option>
+                            <option value="27">27 - Maharashtra</option>
+                            <option value="29">29 - Karnataka</option>
+                            <option value="19">19 - West Bengal</option>
+                        </select>
+                        <input type="text" id="fg-item" placeholder="FG Item Name" required>
+                        <input type="text" id="hsn-code" placeholder="HSN Code" required>
+                        <input type="number" id="order-qty" placeholder="Total Order Qty" required>
+                        <input type="date" id="delivery-date" required>
+                        <input type="text" id="size-matrix" placeholder="Size Breakup (e.g., S:10, M:20)">
+                    </div>
+                    <textarea id="n1-notes" placeholder="Internal Notes / Multiple Tax Slab Details" rows="4" style="width: 100%; margin-top: 15px; padding: 10px;"></textarea>
+                    <button type="submit" class="btn-primary" style="margin-top: 15px; padding: 10px 20px; background: #2c3e50; color: white; border: none; cursor: pointer;">Generate FG Token (ART)</button>
+                </form>
             </div>
             
-            <div id="procurement" class="module-content" style="display: none;">
-                <h3>Procurement</h3>
-                <p>Supplier List, PR, and PO forms will render here.</p>
-            </div>
-            
-            <div id="warehouse" class="module-content" style="display: none;">
-                <h3>Warehouse</h3>
-                <p>QC and GRN scanning will render here.</p>
-            </div>
-            
-            <div id="production" class="module-content" style="display: none;">
-                <h3>Production</h3>
-                <p>Order Release and Material Issue will render here.</p>
-            </div>
-            
-            <div id="settings" class="module-content" style="display: none;">
-                <h3>Settings</h3>
-                <p>System TTL and Notifications will render here.</p>
-            </div>
-            
-            <div id="reports" class="module-content" style="display: none;">
-                <h3>Reports</h3>
-                <p>Data exports will render here.</p>
-            </div>
+            <div id="procurement" class="module-content" style="display: none;"><h3>Procurement</h3><p>Supplier List, PR, and PO forms will render here.</p></div>
+            <div id="warehouse" class="module-content" style="display: none;"><h3>Warehouse</h3><p>QC and GRN scanning will render here.</p></div>
+            <div id="production" class="module-content" style="display: none;"><h3>Production</h3><p>Order Release and Material Issue will render here.</p></div>
+            <div id="settings" class="module-content" style="display: none;"><h3>Settings</h3><p>System TTL and Notifications will render here.</p></div>
+            <div id="reports" class="module-content" style="display: none;"><h3>Reports</h3><p>Data exports will render here.</p></div>
         </main>
     </div>
-
     <script src="app.js"></script>
 </body>
 </html>
