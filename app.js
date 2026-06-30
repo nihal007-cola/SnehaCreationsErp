@@ -1,10 +1,10 @@
 // ================================================================
-// Sneha Creations ERP – Trims Module
-// Complete Application Logic with Dynamic Node Loading
+// Sneha Creations – Workflow Systems
+// Raw Material Management – Complete Application Logic
 // ================================================================
 
 // ===== STATE =====
-let currentUser = { id: 'ADMIN', role: 'CHECKER' };
+let currentUser = { id: 'ADMIN', role: 'CHECKER', email: 'admin@sneha.com' };
 let sessionToken = 'demo-session-' + Date.now();
 let formDataStore = {};
 let currentTab = 'fgorder';
@@ -29,14 +29,108 @@ document.addEventListener('DOMContentLoaded', function() {
 // ===== LOGIN =====
 function handleLogin() {
   const userId = document.getElementById('loginUserId').value || 'USER';
+  const password = document.getElementById('loginPassword').value || '';
   const role = document.getElementById('loginRole').value;
-  currentUser = { id: userId, role: role };
-  document.getElementById('userDisplayName').textContent = userId;
+  
+  // For demo, any password works
+  currentUser = { 
+    id: userId, 
+    role: role,
+    email: userId
+  };
+  
+  document.getElementById('userDisplayName').textContent = userId.split('@')[0] || userId;
   document.getElementById('userRoleBadge').textContent = role;
+  document.getElementById('userEmailBadge').textContent = userId;
+  
   document.getElementById('loginPage').classList.remove('active');
   document.getElementById('loginPage').style.display = 'none';
   document.getElementById('mainApp').classList.add('active');
   showNotice('✅ Welcome', `Logged in as ${userId} (${role})`, 'success');
+}
+
+// ===== SIGNUP =====
+function handleSignup() {
+  const name = document.getElementById('signupName').value;
+  const email = document.getElementById('signupEmail').value;
+  const password = document.getElementById('signupPassword').value;
+  const confirm = document.getElementById('signupConfirm').value;
+  const role = document.getElementById('signupRole').value;
+  
+  // Validation
+  if (!name || !email || !password || !confirm) {
+    showLoginMessage('Please fill in all fields.', 'error');
+    return;
+  }
+  
+  if (password !== confirm) {
+    showLoginMessage('Passwords do not match.', 'error');
+    return;
+  }
+  
+  if (password.length < 6) {
+    showLoginMessage('Password must be at least 6 characters.', 'error');
+    return;
+  }
+  
+  // Store signup request (in real app, this would go to backend)
+  const signupData = {
+    name: name,
+    email: email,
+    role: role,
+    timestamp: new Date().toISOString(),
+    status: 'pending'
+  };
+  
+  if (!formDataStore['SIGNUPS']) formDataStore['SIGNUPS'] = [];
+  formDataStore['SIGNUPS'].push(signupData);
+  
+  // Show success message
+  showLoginMessage(
+    '✅ The Offices of Nawnit Nihal has been notified. Please wait for approval.',
+    'success'
+  );
+  
+  // Clear form
+  document.getElementById('signupName').value = '';
+  document.getElementById('signupEmail').value = '';
+  document.getElementById('signupPassword').value = '';
+  document.getElementById('signupConfirm').value = '';
+  
+  // Log for developer
+  console.log('📝 New signup request:', signupData);
+  console.log('📋 Total pending signups:', formDataStore['SIGNUPS'].length);
+}
+
+// ===== LOGIN/ SIGNUP UI SWITCH =====
+function showSignup() {
+  document.getElementById('loginScreen').classList.remove('active');
+  document.getElementById('signupScreen').classList.add('active');
+  document.getElementById('loginMessage').className = 'login-message-box';
+  document.getElementById('loginMessage').textContent = '';
+}
+
+function showLogin() {
+  document.getElementById('signupScreen').classList.remove('active');
+  document.getElementById('loginScreen').classList.add('active');
+  document.getElementById('signupMessage').className = 'login-message-box';
+  document.getElementById('signupMessage').textContent = '';
+}
+
+function showLoginMessage(message, type) {
+  // Check which screen is active
+  const loginScreen = document.getElementById('loginScreen');
+  const signupScreen = document.getElementById('signupScreen');
+  
+  if (loginScreen.classList.contains('active')) {
+    const msgBox = document.getElementById('loginMessage');
+    msgBox.textContent = message;
+    msgBox.className = 'login-message-box show ' + type;
+  } else if (signupScreen.classList.contains('active')) {
+    const msgBox = document.getElementById('signupMessage');
+    msgBox.textContent = message;
+    msgBox.className = 'login-message-box show ' + type;
+  }
 }
 
 function logoutUser() {
@@ -44,6 +138,8 @@ function logoutUser() {
   document.getElementById('mainApp').classList.remove('active');
   document.getElementById('loginPage').style.display = 'flex';
   document.getElementById('loginPage').classList.add('active');
+  // Reset to login screen
+  showLogin();
   showNotice('👋 Logged out', 'Session terminated.', 'info');
   setTimeout(closeNotice, 1500);
 }
@@ -84,7 +180,6 @@ function loadNode(nodeId, nodeName, evt) {
     parent.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
     evt.currentTarget.classList.add('active');
   } else {
-    // Find and activate the corresponding sub-tab
     document.querySelectorAll('.sub-tab').forEach(t => {
       if (t.getAttribute('data-sub') === nodeId) {
         t.classList.add('active');
@@ -94,25 +189,21 @@ function loadNode(nodeId, nodeName, evt) {
     });
   }
   
-  // Find the container
   const parentTab = document.querySelector(`.page.active`);
   if (!parentTab) return;
   const containerId = `node-content-${parentTab.id}`;
   const container = document.getElementById(containerId);
   if (!container) return;
   
-  // Check if already loaded
   if (loadedNodes[nodeId]) {
     container.innerHTML = loadedNodes[nodeId];
-    // Re-bind form events
     bindFormEvents(nodeId);
     return;
   }
   
-  // Show loader
   container.innerHTML = `<div class="loading-spinner">Loading ${nodeName}...</div>`;
   
-  // Try multiple paths: nodes/ folder first, then root
+  // Try multiple paths
   const paths = [
     `nodes/${nodeId}.html`,
     `${nodeId}.html`
@@ -133,8 +224,6 @@ function loadNode(nodeId, nodeName, evt) {
     }
     
     const path = paths[pathIndex];
-    console.log(`Attempting to load: ${path}`);
-    
     fetch(path)
       .then(response => {
         if (!response.ok) throw new Error(`Not found at ${path}`);
@@ -144,14 +233,12 @@ function loadNode(nodeId, nodeName, evt) {
         loadedNodes[nodeId] = html;
         container.innerHTML = html;
         bindFormEvents(nodeId);
-        // Trigger any node-specific initialization
         if (window[`initNode${nodeId}`]) {
           window[`initNode${nodeId}`]();
         }
-        console.log(`✅ Successfully loaded: ${path}`);
+        console.log(`✅ Loaded: ${path}`);
       })
       .catch(error => {
-        console.log(`❌ Failed to load from ${path}:`, error);
         pathIndex++;
         tryNextPath();
       });
@@ -162,11 +249,9 @@ function loadNode(nodeId, nodeName, evt) {
 
 // ===== BIND FORM EVENTS =====
 function bindFormEvents(nodeId) {
-  // Find the form in the loaded content
   const form = document.querySelector(`#node-content-${currentTab} .form-section`);
   if (!form) return;
   
-  // Bind submit button
   const submitBtn = form.querySelector('.btn-submit');
   if (submitBtn) {
     submitBtn.onclick = function() {
@@ -174,7 +259,6 @@ function bindFormEvents(nodeId) {
     };
   }
   
-  // Bind bulk upload
   const bulkInput = form.querySelector('.bulk-upload-input');
   if (bulkInput) {
     bulkInput.onchange = function(e) {
@@ -182,7 +266,6 @@ function bindFormEvents(nodeId) {
     };
   }
   
-  // Bind download format
   const downloadBtn = form.querySelector('.btn-download');
   if (downloadBtn) {
     downloadBtn.onclick = function() {
@@ -190,7 +273,6 @@ function bindFormEvents(nodeId) {
     };
   }
   
-  // Bind calculation events
   form.querySelectorAll('[data-calc]').forEach(el => {
     el.oninput = function() {
       const calcType = el.getAttribute('data-calc');
@@ -421,7 +503,6 @@ function loadReport(type) {
   
   container.innerHTML = reportContent[type] || '<div class="error-message">Report not found</div>';
   
-  // Update sub-tab active state
   document.querySelectorAll('#reports .sub-tab').forEach(t => {
     t.classList.remove('active');
     if (t.getAttribute('data-sub') === `report-${type}`) {
@@ -504,6 +585,9 @@ function hideFullscreenLoader() {
 
 // ===== GLOBAL EXPOSURE =====
 window.handleLogin = handleLogin;
+window.handleSignup = handleSignup;
+window.showSignup = showSignup;
+window.showLogin = showLogin;
 window.logoutUser = logoutUser;
 window.openTab = openTab;
 window.loadNode = loadNode;
@@ -522,5 +606,5 @@ window.showFullscreenLoader = showFullscreenLoader;
 window.hideFullscreenLoader = hideFullscreenLoader;
 window.generateART = generateART;
 
-console.log('✅ Sneha Creations ERP – Trims Module loaded');
-console.log('📋 Dynamic node loading enabled for 18 nodes');
+console.log('✅ Sneha Creations – Workflow Systems loaded');
+console.log('📋 Raw Material Management - 18 nodes enabled');
