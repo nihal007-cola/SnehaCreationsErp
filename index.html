@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sneha Creations ERP – Trims Module</title>
+  <title>Sneha Creations – Workflow Systems</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -15,14 +15,20 @@
     <div class="logo-section">
       <img src="https://raw.githubusercontent.com/nihal007-cola/nihal007-cola.github.io/main/ChatGPT%20Image%20Jun%2017%2C%202026%2C%2009_29_09%20AM.png" alt="Sneha Creations Logo" class="logo-square" />
       <div class="brand-name">Sneha Creations</div>
-      <div class="brand-tagline">ERP · Trims Module</div>
+      <div class="brand-tagline">Workflow Systems · Raw Material Management</div>
       <div class="brand-subtitle">Powered by Offices of Nawnit Nihal</div>
     </div>
-    <div id="methodSelector" class="login-screen active">
+    
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen active">
       <div id="loginMessage" class="login-message-box"></div>
       <div class="login-form-group">
-        <label>User ID</label>
-        <input id="loginUserId" placeholder="Enter User ID" value="ADMIN" />
+        <label>User ID / Email</label>
+        <input id="loginUserId" placeholder="Enter your email or user ID" value="admin@sneha.com" />
+      </div>
+      <div class="login-form-group">
+        <label>Password</label>
+        <input id="loginPassword" type="password" placeholder="Enter your password" value="password123" />
       </div>
       <div class="login-form-group">
         <label>Role</label>
@@ -33,7 +39,46 @@
         </select>
       </div>
       <button class="login-btn login-btn-primary" onclick="handleLogin()">🔐 Login</button>
-      <div style="margin-top:18px;text-align:center;color:#64748b;font-size:0.8rem;">Enterprise Login · No password required</div>
+      
+      <div style="margin-top:16px;text-align:center;color:#64748b;font-size:0.85rem;">
+        Don't have an account? 
+        <a href="#" onclick="showSignup()" style="color:#38bdf8;text-decoration:none;font-weight:600;">Sign Up</a>
+      </div>
+      <div style="margin-top:8px;text-align:center;color:#475569;font-size:0.7rem;">Enterprise Login · Demo credentials provided</div>
+    </div>
+    
+    <!-- Signup Screen -->
+    <div id="signupScreen" class="login-screen">
+      <div id="signupMessage" class="login-message-box"></div>
+      <div class="login-form-group">
+        <label>Full Name</label>
+        <input id="signupName" placeholder="Enter your full name" />
+      </div>
+      <div class="login-form-group">
+        <label>Email ID</label>
+        <input id="signupEmail" type="email" placeholder="Enter your email" />
+      </div>
+      <div class="login-form-group">
+        <label>Password</label>
+        <input id="signupPassword" type="password" placeholder="Create a password" />
+      </div>
+      <div class="login-form-group">
+        <label>Confirm Password</label>
+        <input id="signupConfirm" type="password" placeholder="Confirm your password" />
+      </div>
+      <div class="login-form-group">
+        <label>Role</label>
+        <select id="signupRole">
+          <option value="MAKER">Maker</option>
+          <option value="CHECKER">Checker</option>
+        </select>
+      </div>
+      <button class="login-btn login-btn-primary" onclick="handleSignup()">📝 Sign Up</button>
+      
+      <div style="margin-top:16px;text-align:center;color:#64748b;font-size:0.85rem;">
+        Already have an account? 
+        <a href="#" onclick="showLogin()" style="color:#38bdf8;text-decoration:none;font-weight:600;">Login</a>
+      </div>
     </div>
   </div>
 </div>
@@ -46,13 +91,14 @@
       <img src="https://raw.githubusercontent.com/nihal007-cola/nihal007-cola.github.io/main/ChatGPT%20Image%20Jun%2017%2C%202026%2C%2009_29_09%20AM.png" alt="Sneha Creations" class="logo" />
       <div>
         <h2>Sneha Creations</h2>
-        <small>ERP · Trims Module</small>
+        <small>Workflow Systems · Raw Material Management</small>
         <p>Powered by Offices of Nawnit Nihal</p>
       </div>
     </div>
     <div class="user">
       <span id="userDisplayName">ADMIN</span>
       <span id="userRoleBadge" class="role-badge">CHECKER</span>
+      <span id="userEmailBadge" class="role-badge" style="background:#1e293b;color:#94a3b8;">admin@sneha.com</span>
       <button onclick="logoutUser()">Logout</button>
     </div>
   </header>
