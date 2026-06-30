@@ -112,31 +112,52 @@ function loadNode(nodeId, nodeName, evt) {
   // Show loader
   container.innerHTML = `<div class="loading-spinner">Loading ${nodeName}...</div>`;
   
-  // Fetch node HTML
-  fetch(`nodes/${nodeId}.html`)
-    .then(response => {
-      if (!response.ok) throw new Error('Node not found');
-      return response.text();
-    })
-    .then(html => {
-      loadedNodes[nodeId] = html;
-      container.innerHTML = html;
-      bindFormEvents(nodeId);
-      // Trigger any node-specific initialization
-      if (window[`initNode${nodeId}`]) {
-        window[`initNode${nodeId}`]();
-      }
-    })
-    .catch(error => {
-      console.error('Error loading node:', error);
+  // Try multiple paths: nodes/ folder first, then root
+  const paths = [
+    `nodes/${nodeId}.html`,
+    `${nodeId}.html`
+  ];
+  let pathIndex = 0;
+  
+  function tryNextPath() {
+    if (pathIndex >= paths.length) {
       container.innerHTML = `
         <div class="error-message">
           <p>⚠️ Failed to load ${nodeName}</p>
-          <p style="font-size:0.8rem;color:#64748b;">${error.message}</p>
-          <button class="btn btn-primary" onclick="loadNode('${nodeId}','${nodeName}',null)">Retry</button>
+          <p style="font-size:0.8rem;color:#64748b;">File not found in nodes/ or root directory</p>
+          <p style="font-size:0.7rem;color:#64748b;margin-top:4px;">Tried: ${paths.join(', ')}</p>
+          <button class="btn btn-primary" onclick="loadNode('${nodeId}','${nodeName}',null)" style="margin-top:12px;">Retry</button>
         </div>
       `;
-    });
+      return;
+    }
+    
+    const path = paths[pathIndex];
+    console.log(`Attempting to load: ${path}`);
+    
+    fetch(path)
+      .then(response => {
+        if (!response.ok) throw new Error(`Not found at ${path}`);
+        return response.text();
+      })
+      .then(html => {
+        loadedNodes[nodeId] = html;
+        container.innerHTML = html;
+        bindFormEvents(nodeId);
+        // Trigger any node-specific initialization
+        if (window[`initNode${nodeId}`]) {
+          window[`initNode${nodeId}`]();
+        }
+        console.log(`✅ Successfully loaded: ${path}`);
+      })
+      .catch(error => {
+        console.log(`❌ Failed to load from ${path}:`, error);
+        pathIndex++;
+        tryNextPath();
+      });
+  }
+  
+  tryNextPath();
 }
 
 // ===== BIND FORM EVENTS =====
@@ -208,7 +229,7 @@ function submitForm(nodeId) {
   formDataStore[formType].push(data);
   
   // GSTIN validation
-  const gstinFields = ['fgGstin', 'supplierGstin', 'logGstin', 'configGstin'];
+  const gstinFields = ['fgGstin', 'supplierGstin', 'logGstin', 'configGstin', 'n1Gstin', 'n5Gstin', 'n7Gstin', 'n9Gstin', 'n17Gstin'];
   let hasError = false;
   gstinFields.forEach(fid => {
     const el = document.getElementById(fid);
